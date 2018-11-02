@@ -1,0 +1,41 @@
+﻿@model IEnumerable <promoTalk.Models.tbl_events>
+  @{ if (Model.Count() <= 0)
+      {
+        <div style="text-align: center;padding:50px 0"> <h3>No Results Found</h3></div>
+      }
+      else
+      {
+        <div class="row container-a" style="padding-top:20px !important;">
+            @foreach (var item in Model)
+            {
+            <div class="col-lg-4">
+                <div class="event-box">
+
+                    <div class="col-lg-3">
+                        <a href="@Url.Action("EventDescription", "Home", new { title = item.slugURL})">
+                            <div style="width:100%">
+                                @item.dateTime.ToString("MMM")<br />
+                                <span>@item.dateTime.ToString("dd")<br /></span>
+                                @item.dateTime.ToString("yyyy")<br />
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-9">
+                        <span><a href="@Url.Action("EventDescription", "Home", new { title = item.slugURL})">@Html.DisplayFor(modelItem => item.name)</a></span> <br />
+                        @Html.DisplayFor(modelItem => item.venue)<br />
+
+                        <b>Hosted By </b>@Html.DisplayFor(modelItem => item.Hoster)<br />
+
+                        <p><a href="@Url.Action("EventDescription", "Home", new { title = item.slugURL })">View Event Details</a></p>
+
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+      }
+}
+   
+
+

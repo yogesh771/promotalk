@@ -1,0 +1,8 @@
+﻿@model IEnumerable<promoTalk.Models.catalogCatagory>
+
+@{ var str = "";}
+@foreach (var item in Model)
+{
+    str = str + item.productCategory.productCategory1 +", ";
+}
+<div>@str</div>

@@ -1,0 +1,339 @@
+﻿@using System.Text.RegularExpressions;
+@{
+    Layout = "/Views/Shared/_layout.cshtml";
+}
+<link href="~/Content/base/autocomplete.css" rel="stylesheet" />
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.0/jquery-ui.min.js"></script>
+@*-----header--------*@
+<div class="main-header">
+<div class="headermn">
+    <div class="container">
+        
+        <!-- <div class="menutrigger">
+            <div class="c-hamburger c-hamburger--htx"><span>Toggle Menu</span></div>
+        </div> -->
+        <!--<div class="newsletter">
+                </div>-->
+
+                <!-- Static navbar -->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+      <div class="logo navbar-brand"><a href="@Url.Action("Index", "Home")">Promo<strong>Talks</strong></a></div>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav pull-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Search <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li> <a target="_blank" href="http://camerareadyart.espwebsite.com">Promo Products</a></li>
+            <li><a href="@Url.Action("CatalogS","Home")">Promo Catalogs</a></li>
+            <li><a href="@Url.Action("offers","Home")">Promo Flyers</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">DESIGN <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="https://www.qeretail.com/" target="_blank">Promo Stores</a></li> @*"@Url.Action("promostore", "Home")"*@
+            @*<li><a href="@Url.Action("artwork","Home")">Promo Art & Design</a></li>*@
+            <li><a href="http://camerareadyart.com/">Promo Art & Design</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Explore <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="@Url.Action("News", "Home")">Promo News</a></li>
+            <li><a href="@Url.Action("events","Home")">Promo Events</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Learn <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="@Url.Action("Marketing", "Home")">Promo Marketing</a></li>
+            <li><a href="@Url.Action("Technology", "Home")">Promo Technology</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Find <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="@Url.Action("promo_screen_printers","Home")">Screen Printers</a></li>
+                            <li><a href="@Url.Action("promo_embroiders","Home")">Embroiders</a></li>
+          </ul>
+        </li>
+      </ul>
+
+    </div>
+    <!--/.nav-collapse -->
+  </div>
+  <!--/.container-fluid -->
+</nav>
+
+        <!-- <div class="navmn top-menu" id="cssmenu01">
+            <div class="menu-top-navigation-container">
+                <ul id="menu-top-navigation" class="nav-menu">
+
+                    <li id="menu-item-3948" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3948">
+                        <a href="javascript: void(0);" class="has-child"> Search</a>
+                        <ul class="dropdown-content">
+                            <li> <a target="_blank" href="http://camerareadyart.espwebsite.com">Promo Products</a></li>
+                            <li><a href="@Url.Action("CatalogS","Home")">Promo Catalogs</a></li>
+                            <li><a href="@Url.Action("offers","Home")">Promo Flyers</a></li>
+                        </ul>
+                    </li>
+                    <li id="menu-item-3948" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3948">
+                        <a href="javascript: void(0);" class="has-child"> DESIGN</a>
+                        <ul class="dropdown-content">
+                            <li><a href="https://www.qeretail.com/" target="_blank">Promo Stores</a></li> @*"@Url.Action("promostore", "Home")"*@
+                            @*<li><a href="@Url.Action("artwork","Home")">Promo Art & Design</a></li>*@
+                            <li><a href="http://camerareadyart.com/">Promo Art & Design</a></li>
+                        </ul>
+                    </li>
+                    <li id="menu-item-3948" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3948">
+                        <a href="javascript: void(0);" class="has-child"> Explore</a>
+                        <ul class="dropdown-content">
+                            <li><a href="@Url.Action("News", "Home")">Promo News</a></li>
+                            <li><a href="@Url.Action("events","Home")">Promo Events</a></li>
+                        </ul>
+                    </li>
+                    <li id="menu-item-3948" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3948">
+                        <a href="javascript: void(0);" class="has-child"> Learn</a>
+                        <ul class="dropdown-content">
+                            <li><a href="@Url.Action("Marketing", "Home")">Promo Marketing</a></li>
+                            <li><a href="@Url.Action("Technology", "Home")">Promo Technology</a></li>
+                        </ul>
+                    </li>
+                    <li id="menu-item-3948" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3948">
+                        <a href="@Url.Action("Technology", "Home")" class="has-child"> Find</a>
+                        <ul class="dropdown-content last">
+                            <li><a href="@Url.Action("promo_screen_printers","Home")">Screen Printers</a></li>
+                            <li><a href="@Url.Action("promo_embroiders","Home")">Embroiders</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div> -->
+    </div>
+</div>
+@*------header end-------*@
+<div class="main-slider">
+    <div class="">
+
+        <!--<div class="bannermn"><img src="wp-content/themes/cratalks/images/banner.jpg" alt=" " /></div>-->
+
+        <div class="sliderwrapper">
+            <div class="container">
+                <div class="serach">
+                    <h1 style="font-family:'Open Sans', sans-serif !important"> Promo Resource for Everyone</h1>
+                    <span class="tag-text" style="font-family:'Open Sans', sans-serif !important">Search Suppliers Catalogs, Flyers, Promo News, Events & a lot more...</span>
+                    <form id="top_search">
+                        <fieldset>
+                            <input class="search-box" type="text" value="" placeholder="Search..." id="txtSearch" /></br>
+                            @*<input class="search-button" type="button" value="Search" />*@
+                        </fieldset>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+<div class="contentmn">
+    <div class="container">
+        <div class="left-content-main">
+            <div class="left-section">
+                <h2>SEARCH</h2>
+                <p>
+                    Search through unlimited Promo-Products<br /> Catalogs and Flyers from Industry Top Suppliers.
+                </p>
+            </div>
+            <div class="right-section">
+                <div class="icon-1">
+                    <a href="~/catalog"><img src="images/CatalogS.png" alt="Catalogs" /><span class="category-name">Promo <span>Catalogs</span></span></a>
+                </div>
+                <div class="icon-1 icon-2">
+                    <a href="~/flyer"><img src="images/offers.png" alt="Flyers" /><span class="category-name">Promo <span>Flyers</span></span></a>
+                </div>
+            </div>
+        </div>
+        <div class="right-content-main">
+            <div class="right-section">
+                <div class="icon-1 icon-3">
+                    <a href="https://www.qeretail.com/" target="_blank"><img src="images/stores.png" alt="Stores" /><span class="category-name">Promo <span>Stores</span></span></a>
+                </div>
+                <div class="icon-1 icon-4">
+                    <a href="https://www.camerareadyart.com/"><img src="images/designs.png" alt="Designs" /><span class="category-name">Promo <span>Art & Design</span></span></a> @*@Url.Action("artwork", "Home")*@
+                </div>
+            </div>
+            <div class="left-section">
+                <h2>DESIGN</h2>
+                <p>
+                    End-to-end e-Store services and Website solutions.
+                    <br> Artwork, Marketing and Creative Design services.
+                </p>
+            </div>
+        </div>
+        <div class="left-content-main">
+            <div class="left-section">
+                <h2>EXPLORE</h2>
+                <p>  
+                    Latest News from Promo-Product Industry.
+                    <br> Explore Promo Events and Expo around you.                  
+                   
+                </p>
+            </div>
+            <div class="right-section">
+                <div class="icon-1 icon-5">                   
+                    <a href="~/news"><img src="images/news.png" alt="News" /><span class="category-name">Promo <span>News</span></span></a>
+                </div>
+                <div class="icon-1 icon-6">
+                    <a href="~/events"><img src="images/events.png" alt="Events" /><span class="category-name">Promo <span>Events</span></span></a>
+                </div>
+            </div>
+        </div>
+        <div class="right-content-main">
+            <div class="right-section">
+                <div class="icon-1 icon-7">
+                    <a href="~/marketing"><img src="images/marketing.png" alt="Marketing" /><span class="category-name">Promo <span>Marketing</span></span></a>
+                </div>
+                <div class="icon-1 icon-8">
+                    <a href="~/technology"><img src="images/technology.png" alt="Technology" /><span class="category-name">Promo <span>Technology</span></span></a>
+                </div>
+            </div>
+            <div class="left-section">
+                <h2>LEARN</h2>
+                <p>Latest Tips, Topics and Tools from Industry Experts on Digital Marketing and Technology Solutions.</p>
+            </div>
+        </div>
+        <div class="left-content-main">
+            <div class="left-section">
+                <h2>FIND</h2>
+                <p>
+                    Find suitable Print or Embriodery Partner through Complete and Managed Promo Decorators listing.
+                </p>
+            </div>
+            <div class="right-section">
+                <div class="icon-1 icon-9">
+                    <a href='@Url.Action("promo_screen_printers")'>
+                    <img src="images/screen-printers.png" alt="News" />
+                        <span class="category-name">Promo <span>Screen Printers</span></span>
+                    </a>
+                </div>
+                <div class="icon-1 icon-10">
+                    <a href='@Url.Action("promo_embroiders")'> 
+                        <img src="images/embroiders.png" alt="Events" />
+                        <span class="category-name">Promo <span>Embroiders</span></span>
+                   </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-home">
+    <div class="product-category">
+        <h2>Promo <strong>Products</strong></h2>
+        <ul>
+            <li><img src="images/2.png" alt="Apparels" /><span class="product-text">Apparels</span></li>
+            <li><img src="images/5.png" alt="Awards &#038; Gifts" /><span class="product-text">Awards &#038; Gifts</span></li>
+            <li><img src="images/4.png" alt="Calendars &#038; Magnets" /><span class="product-text">Calendars &#038; Magnets</span></li>
+            <li><img src="images/10.png" alt="Computers &#038; Electronics" /><span class="product-text">Computers &#038; Electronics</span></li>
+            <li><img src="images/1.png" alt="Drinkware" /><span class="product-text">Drinkware</span></li>
+            <li><img src="images/3.png" alt="Golf Items" /><span class="product-text">Golf Items</span></li>
+            <li><img src="images/7.png" alt="Health &#038; Wellness" /><span class="product-text">Health &#038; Wellness</span></li>
+            <li><img src="images/8.png" alt="Luggage &#038; Travel" /><span class="product-text">Luggage &#038; Travel</span></li>
+            <li><img src="images/6.png" alt="Office &#038; Desks" /><span class="product-text">Office &#038; Desks</span></li>
+            <li><img src="images/9.png" alt="Sports Leisure" /><span class="product-text">Sports Leisure</span></li>
+        </ul>
+        <p><span class="many-more"><a class="start-search-btn" href="http://camerareadyart.espwebsite.com/" target="_blank">Search</a></span></p>
+    </div>
+</div>
+<h2 style="display:none;">Recommended Reading</h2>
+<div class="row" style="display:none;">
+</div>
+
+<script>
+$('.dropdown-toggle').click(function(e) {
+  if ($(document).width() > 768) {
+    e.preventDefault();
+
+    var url = $(this).attr('href');
+
+       
+    if (url !== '#') {
+    
+      window.location.href = url;
+    }
+
+  }
+});
+
+    $(function () {
+
+        $("#txtSearch").autocomplete({
+            source: function (request, response) {
+                
+
+                    $.ajax({
+                        url: "./Home/searchResult",
+                        data: { searchKeyWord: request.term },
+                        dataType: "json",
+                        success: function (data) {
+                            
+                            response($.map(data, function (item) {
+                                
+                                return {
+                                    label: item.title,
+                                    value: item.title,
+                                    pagename: item.pagename,
+                                    id: item.id,
+                                    url: item.url,
+                                    label_:item.label
+                                    //profile_image_path: item.seo_OGImage
+                                }
+                            }));
+                        }
+
+                    });
+
+                }
+            })
+    .data("ui-autocomplete")._renderItem = function (ul, item) {
+        
+        var inner_html = "";
+        if (item.url ==null)
+        {
+             inner_html = "<label>" + item.label_ + "</label>";
+        }
+        else
+        {
+             inner_html = "<label>" + item.label_ + "</label><a href=http://beta.promotalks.biz/" + item.pagename + "/" + item.url + ">" + item.label + " </a>";
+        }
+
+        return $("<li style = 'padding:20px 0 0 0;margin: 0 0 0 0;height:40px;' ></li>")
+                .data("item.autocomplete", item)
+                .append(inner_html)
+                .appendTo(ul);
+    };
+    })
+</script>
+<style>
+    .ui-state-active{border:0px !important;   }
+    ul.ui-menu>li.ui-menu-item>label.ui-state-active{border:0px !important; font-weight:bold   }
+    .ui-menu .ui-menu-item a {line-height:1 !important}
+</style>
+<script>
+    $(document).keyup(function (e) {
+       
+       if (e.keyCode == 27) {
+           document.getElementById('txtSearch').value = '';
+       }  // esc
+    });
+</script>

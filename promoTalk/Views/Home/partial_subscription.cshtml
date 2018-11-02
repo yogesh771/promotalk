@@ -1,0 +1,82 @@
+﻿
+<div style="width:100%">
+    <h4>SUBSCRIBE TO PROMOTALKS</h4> 
+    <p class="f-a">Subscribe for newsletter to get updates of our new blog posts</p>
+   
+        
+         <input type="text" id="txt_name" placeholder="Name"/>
+        <input type="text" id="txt_email" placeholder="Email"/>
+    <input class="s-submit" type="button" value="SUBSCRIBE" onclick="subscribe()"/>
+</div>
+
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/bootbox.min.js"></script>
+<script src="~/Scripts/EmailVaidation.js"></script>
+<script>
+    function subscribe()
+    {
+        {
+            
+            var txt_name = $("#txt_name").val();
+            var txt_email = $("#txt_email").val();
+            if (txt_name == "" && txt_email== "")
+            {
+                bootbox.alert({
+                    title: "Alert !",
+                    message: '<p>Please enter your name and valid email id</p>',
+                    timeOut: 2000
+
+                });
+                return
+            }
+            var isvalid=  emailvalidation(txt_email);
+            if(!isvalid){
+                bootbox.alert({
+                    title: "Alert !",
+                    message: '<p>Please enter your name and valid email id</p>',
+                    timeOut: 2000
+
+                });
+                return
+            }
+
+            
+
+            $.ajax({
+                url: '/Home/partial_subscription',
+                type: 'POST',
+                data: { 'txt_name': txt_name , 'txt_email': txt_email },
+                success: function (data) {
+                    
+                    if (data == "ok")
+                    {
+                        bootbox.alert({
+                            title: "Done !",
+                            message: '<p>Thank you for subscribing us </p>',
+                            timeOut: 2000
+
+                        });
+                    }
+                    else
+                    {
+                        bootbox.alert({
+                            title: "Alert !",
+                            message: '<p>Whooaaa! Something went wrong..</p>',
+                            timeOut: 2000
+
+                        });
+                    }
+                },
+                error: function () {
+                    bootbox.alert({
+                        title: "Alert !",
+                        message: '<p>Whooaaa! Something went wrong..</p>',
+                        timeOut: 2000
+
+                    });
+
+                }
+            });
+        }
+    }
+</script>

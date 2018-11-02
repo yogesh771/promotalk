@@ -1,0 +1,91 @@
+﻿
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutInternal.cshtml";
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<div class="col-md-12">
+   
+        <h4>Events List </h4>
+        <hr>
+   
+    <div class="col-md-12">
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.TextBox("txtFromDate", "Start date", htmlAttributes: new { @class = "form-control ", @id = "txtFromDate", @type="date" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.TextBox("txtToDate", "From date", htmlAttributes: new { @class = "form-control ", @id = "txtToDate" ,@type = "date" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.TextBox("txtEventName", null, htmlAttributes: new { @class = "form-control", @id = "txtEventName", @placeHolder="Event Name" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <input type="button" class="btn btn-defaul" value="Search" onclick="return searchResult();" />
+            </div>
+        </div>
+    </div>
+        <div class="col-lg-12" id="viewResult">
+            <div class="col-lg-12 white-box">
+                <p>Please use above search criteria to view the result list</p>
+            </div>
+        </div>
+    </div>
+
+<script>
+
+    function searchResult() {
+        
+        var txtFromDate = $("#txtFromDate").val();
+        var txtToDate = $("#txtToDate").val();
+        var txtEventName = $("#txtEventName").val();
+
+
+        if (txtFromDate == "") {
+            txtFromDate = new Date()
+            txtFromDate = (txtFromDate.getFullYear()-20) + "-" + parseInt(txtFromDate.getMonth() + 1) + "-" + txtFromDate.getDate()
+        }
+        if (txtToDate == "") {
+            var dt = new Date();            
+            dt = (dt.getFullYear() + 10) + "-" + parseInt(dt.getMonth() + 1) + "-" + dt.getDate()
+            txtToDate = dt;
+        }       
+        
+
+        $.ajax({
+            url: '/event_s/_partialEvents',
+            type: 'POST',
+            data: { 'txtFromDate': txtFromDate + " 12:00:00 AM", 'txtToDate': txtToDate + " 11:59:59 PM", 'txtEventName': txtEventName },
+            success: function (data) {
+                
+                $('#viewResult').html(data);
+            },
+            error: function () {
+                bootbox.alert({
+                    title: "Alert !",
+                    message: '<p>Whooaaa! Something went wrong..</p>',
+                    timeOut: 2000
+
+                });
+
+            }
+        });
+    }
+</script>
+<script>
+    $(document).ready(function () {
+
+        searchResult();
+    })
+</script>

@@ -1,0 +1,220 @@
+﻿@model promoTalk.Models.news
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutInternal.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("Edit", "news_s", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>news</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.newsID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.title, new { htmlAttributes = new { @id = "title1", @class = "form-control", @onblur = "slugify(title1,slugURL)" } })
+                @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.slugURL, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.slugURL, new { htmlAttributes = new { @class = "form-control", @onblur = "checkExists(slugURL,'news'," + Model.newsID + " , 0)" } })
+                @Html.ValidationMessageFor(model => model.slugURL, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.shortDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.shortDescription, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.shortDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.seo_metaKeyword, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.seo_metaKeyword, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.seo_metaKeyword, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.seo_OGTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.seo_OGTitle, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.seo_OGTitle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.seo_OGDesription, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.seo_OGDesription, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.seo_OGDesription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+           <label class="control-label col-md-2">Last Update</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.updateON, new { htmlAttributes = new { @class = "form-control datetimepicker" } })
+                @Html.ValidationMessageFor(model => model.updateON, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="control-label col-md-3">Image</label>
+                <div class="col-md-9 choose-img">
+                    @Html.HiddenFor(model => model.seo_OGImage)
+                    @{ if (Model.seo_OGImage == null)
+                        {
+                            <img id="pic" src='~/Content/img/emptylogo.jpg' alt="Image" width="200px" height="200px">
+                        }
+                        else
+                        {
+                            <img id="pic" src='@Model.seo_OGImage' alt="Image" width="200px" height="200px">
+                        }
+                    }
+                    
+                    <input type="file" id="photoA" name="file" class="choose-input"><input type="button" value="Remove Image" onclick="RemoveImage(@Model.newsID,'news')" />
+                </div>
+            </div>
+        </div>        
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script>
+    function readURL(input) {
+        
+        if (input.files && input.files[0]) {
+            //Get reference of FileUpload.
+            var fileUpload = document.getElementById("photoA");
+            if (fileUpload.value.length > 0) {
+                //Check whether the file is valid Image.
+                var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(.jpg|.png|.gif)$");
+                if (regex.test(fileUpload.value.toLowerCase())) {
+                    var reader = new FileReader();
+                    var s = fileUpload.files[0];
+                    reader.readAsDataURL(s);
+                    reader.onload = function (e) {
+                        var image = new Image();
+                        image.src = e.target.result;
+                        image.onload = function () {
+                            
+                            var height = this.height;
+                            var width = this.width;                           
+
+                                var reader1 = new FileReader();
+
+                                reader1.onload = function (e) {
+                                    $('#pic').attr('src', e.target.result);
+                                }
+
+                                reader1.readAsDataURL(input.files[0]);
+                            
+                        };
+                    }
+                }
+                else {
+
+                    bootbox.alert({
+                        title: "Alert !",
+                        message: 'Please select .jpg,.png,.gif'
+                    });
+                    return false;
+                }
+            }
+
+        }
+    }
+
+    $("#photoA").change(function () {
+        readURL(this);
+    });
+</script>
+
+
+<script>
+    function RemoveImage(ID, Modelname)
+    {
+        bootbox.confirm({
+            title: "Confirmation !",
+            message: "Are you sure to delete image",
+            buttons: {
+                cancel: {
+                    label: '<i class="fa fa-times"></i> Cancel'
+                },
+                confirm: {
+                    label: '<i class="fa fa-check"></i> Confirm'
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    
+                    $.ajax({
+                        url: '/Account/RemoveImage',
+                        type: 'POST',
+                        data: { 'id': ID, 'Modulename': Modelname },
+                        success: function (data) {
+                            
+                            if (data == 1) {
+                                bootbox.confirm({
+                                    title: "Confirmation !",
+                                    message: "Image deleted",
+                                    buttons: {
+                                        confirm: {
+                                            label: '<i class="fa fa-check"></i> Confirm'
+                                        }
+                                    },
+                                    callback: function (result) {
+                                        window.location.href = window.location
+                                    }
+                                })
+                            }
+                            else {
+                                bootbox.alert({
+                                    title: "Alert !",
+                                    message: '<p>Some thing went wrong .</p>',
+                                    timeOut: 2000
+                                });
+
+                            }
+                        },
+                        error: function ()
+                        {
+                            bootbox.alert({
+                                title: "Alert !",
+                                message: '<p>Some thing went wrong .</p>',
+                                timeOut: 2000
+                            });
+                        }
+                    });
+                }
+
+            }
+        });
+    }
+</script>

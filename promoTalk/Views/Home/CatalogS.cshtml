@@ -1,0 +1,114 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}<header class="entry-header">
+												
+            <div class="title_border">
+				<h2>Promo-Products Catalogs</h2>
+			</div>
+		</header>
+    <div class="page-top-title">
+        Search Latest Promotional Product Catalogs from Industry's top Suppliers
+        
+    </div>
+	<div class="catelog-main-search">
+	
+            <div class="container">
+			<div class="search-box">
+                <ul>
+                    <li>
+                        @Html.DropDownList("productCategoryID", null, "All Product Catagories", htmlAttributes: new { @class = "postform" })                     
+                            
+                    </li>
+                    <li>
+                        @Html.DropDownList("supplierID", null, "All Suppliers", htmlAttributes: new { @class = "postform" })                        
+                    </li>
+                    <li>
+                        <input type="hidden" name="ofsubmitted" value="1">
+                        <input type="button" value="Search" onclick="return searchResult();">
+                        <input type="button" value="Reset" onclick="return reset();">
+                    </li>
+                </ul>
+            </div>
+			</div>
+        </div>
+
+<div class="main-content catalog"  id="viewResult"></div>
+   
+<script>
+    $(document).ready(function () {
+        searchResult();
+    })
+</script>
+    <script>
+
+        function searchResult() {
+            
+            var productCategoryID = $("#productCategoryID").val();
+            var supplierID = $("#supplierID").val();
+            if (productCategoryID == "") {
+                productCategoryID = 0
+            }
+            if (supplierID == "") {
+                supplierID = 0
+            }
+            
+
+            $.ajax({
+                url: '/Home/_partialProductCatalogs',
+                type: 'POST',
+                data: { 'productCategoryID': productCategoryID, 'supplierID': supplierID, 'isOffer': 0, 'isPrenium': 0 },
+                success: function (data) {
+                    
+                    $('#viewResult').html(data);
+                },
+                error: function () {
+                    bootbox.alert({
+                        title: "Alert !",
+                        message: '<p>Whooaaa! Something went wrong..</p>',
+                        timeOut: 2000
+
+                    });
+
+                }
+            });
+			
+			
+	
+        }
+    </script>
+<script>
+    /* JS for demo only */
+    var colors = ['1abc9c', '2c3e50', '2980b9', '7f8c8d', 'f1c40f', 'd35400', '27ae60'];
+
+    colors.each(function (color) {
+        $$('.color-picker')[0].insert(
+          '<div class="square" style="background: #' + color + '"></div>'
+        );
+    });
+
+    $$('.color-picker')[0].on('click', '.square', function (event, square) {
+        background = square.getStyle('background');
+        $$('.custom-dropdown select').each(function (dropdown) {
+            dropdown.setStyle({ 'background': background });
+        });
+    });
+
+    /*
+     * Original version at
+     * http://red-team-design.com/making-html-dropdowns-not-suck
+     */
+
+</script>
+<script>
+    function reset() {
+         $("#productCategoryID").val('');
+         $("#supplierID").val('');
+        searchResult();
+    }
+</script>
+<style>
+    .main-content.catalog ul li img {
+        height: 300px;
+    }
+</style>

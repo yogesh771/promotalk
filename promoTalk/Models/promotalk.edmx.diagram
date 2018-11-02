@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="462a3ee955dc4fe38d1d88dc1809507b" Name="Diagram1">
+        <EntityTypeShape EntityType="promotalkModel.AppErrorLog" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="promotalkModel.buisinessInformation" Width="1.5" PointX="5.25" PointY="5.5" />
+        <EntityTypeShape EntityType="promotalkModel.buisinessService" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="promotalkModel.catalogCatagory" Width="1.5" PointX="9.75" PointY="12.625" />
+        <EntityTypeShape EntityType="promotalkModel.category" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="promotalkModel.country" Width="1.5" PointX="0.75" PointY="6.125" />
+        <EntityTypeShape EntityType="promotalkModel.marketing" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="promotalkModel.news" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="promotalkModel.productCatalog" Width="1.5" PointX="7.5" PointY="11.25" />
+        <EntityTypeShape EntityType="promotalkModel.productCategory" Width="1.5" PointX="7.5" PointY="7.625" />
+        <EntityTypeShape EntityType="promotalkModel.sendGridDetail" Width="1.5" PointX="7.75" PointY="4.75" />
+        <EntityTypeShape EntityType="promotalkModel.service" Width="1.5" PointX="0.75" PointY="0.875" />
+        <EntityTypeShape EntityType="promotalkModel.state" Width="1.5" PointX="3" PointY="12.5" />
+        <EntityTypeShape EntityType="promotalkModel.SubscriberInfo" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="promotalkModel.supplier" Width="1.5" PointX="5.25" PointY="12.125" />
+        <EntityTypeShape EntityType="promotalkModel.tbl_customOrder" Width="1.5" PointX="9.75" PointY="4.75" />
+        <EntityTypeShape EntityType="promotalkModel.tbl_events" Width="1.5" PointX="11.75" PointY="0.75" />
+        <EntityTypeShape EntityType="promotalkModel.technology" Width="1.5" PointX="11.75" PointY="6.75" />
+        <EntityTypeShape EntityType="promotalkModel.user" Width="1.5" PointX="11.75" PointY="10.75" />
+        <AssociationConnector Association="promotalkModel.FK_buisinessInformation_country" />
+        <AssociationConnector Association="promotalkModel.FK_buisinessInformation_state" />
+        <AssociationConnector Association="promotalkModel.FK_buisinessServices_services" />
+        <AssociationConnector Association="promotalkModel.FK_catalogCatagory_productCatalog" />
+        <AssociationConnector Association="promotalkModel.FK_catalogCatagory_productCategory" />
+        <AssociationConnector Association="promotalkModel.FK_state_country" />
+        <AssociationConnector Association="promotalkModel.FK_productCatalog_supplier" />
+        <AssociationConnector Association="promotalkModel.FK_supplier_state" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,120 @@
+﻿@model promoTalk.Models.productCatalog
+
+@{  
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="col-lg-12">
+	<div class="container-a des-content col-lg-8">
+        <div class="c-bg">
+
+
+            <div class="col-lg-12">
+                <div class="col-lg-12" style="padding-left:0px;">
+                    <h4>@Html.DisplayFor(model => model.productTitle)</h4>
+                </div>
+
+             
+            </div>
+            <div class="col-lg-12">
+                @*main-content catalog*@
+
+                <ul style="padding-left:0px; margin-top:15px;">
+                    <li>
+                        @{ if (@Model.isPremeum)
+                            {
+                                <a>
+                                    <span><img src='http://beta.promotalks.biz/images/premimum.png' alt="premium" /></span>
+                                    <img src='@Model.thumbImageURL' alt="Image" />
+                                </a>
+                            }
+                            else
+                            {
+                                <img src='@Model.thumbImageURL' alt="Image"  />
+                            }
+                        }
+
+
+                    </li>
+                </ul>
+            </div>
+
+
+
+        </div>
+		</div>
+		<div class="col-lg-4 t-m" style="margin:27px 0 0 0;">
+		 <div class="event-box-left event-box-left1 margin-b " style="padding:0px 0 15px; float:left;">
+              <div class="col-lg-12" style="padding-right:0px;">
+                     <h5>Details</h5>
+                    <div class="col-lg-12" style="padding:0px;">
+                        <label>Supplier </label>
+                     @Model.supplier.supplierName
+                    @*<h5>@Model.supplier.supplierName</h5>*@
+                    </div>
+
+                    <label>Product Categories</label>
+                    @ViewBag.catalogcatagory
+
+                </div>
+				   @{ if (Model.pdfURL != null)
+                       {
+                        <div class="col-lg-12 right-btn-a">
+                            <a class="view-btn btn-cat" title="View Catalog" target="_blank" href="@Url.Action("viewflipbook", "Home", new { title = Model.slugURL })" >View eCatalog</a>  @*href='~/index.html?pdf=@Model.pdfURL.Substring(@Model.pdfURL.LastIndexOf("/") + 1, @Model.pdfURL.LastIndexOf(".") - @Model.pdfURL.LastIndexOf("/"))'*@
+                            <a class="order-btn btn-cat" title="Order Catalog" href="#" onclick="openModel('@Model.pdfURL', '@Model.pdfName')">Download PDF</a> @*download_file('@Model.pdfURL', '@Model.pdfName')*@
+
+                            <a class="order-btn btn-cat" title="Order Custom Catalog"
+                               href="@Url.Action("Requestform", "customorder", new { id = Model.catalogID, category = "catalog" })">Order Custom Catalog</a>
+                        </div>
+                       }
+                    }
+	     </div>
+		
+                              
+                               
+            @{if(ViewBag.TwoMoreCatalogs != null && ViewBag.TwoMoreCatalogs.Count > 0)
+            {
+                    <div class="col-lg-12 event-box-left event-box-left1 event-box-left1-more margin-b " style="padding:0px 0 15px; float:left;">
+                        <h5>More Offers From</h5>
+                        <div class="rightlink" style="float:left; width:100%; margin-bottom:15px;">
+                            <label>Supplier </label> @Model.supplier.supplierName
+                        </div>
+
+                        @{foreach (var c in (IEnumerable<promoTalk.Models.productCatalog>)ViewBag.TwoMoreCatalogs)
+                            {
+                                <a href="@Url.Action("catalogDescription", new { title= c.slugURL })">
+                                    <img src='@c.thumbImageURL' alt='@c.productTitle'>
+                                    <span style="text-align:center; margin-top: 9px;
+                                          display: block;
+                                          margin-bottom: 25px;
+                                          font-weight: bold;">@c.productTitle</span>
+                                    </a>
+                            }
+                        }
+
+                    </div>
+                            }
+            }
+
+         
+		 </div>
+    </div>
+</div>
+ 
+<script>
+    function printData() {
+        var divToPrint = document.getElementById("emailContentpickup");
+        newWin = window.open("");
+        newWin.document.write(divToPrint.outerHTML);
+        newWin.print();
+        newWin.close();
+    }
+
+    $('#cmd').on('click', function () {
+        printData();
+    })
+</script>
+
+
+

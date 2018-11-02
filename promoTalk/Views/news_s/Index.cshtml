@@ -1,0 +1,130 @@
+﻿@model IEnumerable<promoTalk.Models.news>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutInternal.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table"  id="tblData">
+    <thead>
+        <tr>
+            <th><img src="~/images/arrow.jpg" width="27" height="34"></th>
+            <th>
+                @Html.DisplayNameFor(model => model.title)
+            </th>
+          
+            <th>
+                @Html.DisplayNameFor(model => model.seo_metaKeyword)
+            </th>            
+            <th>
+                @Html.DisplayNameFor(model => model.createdDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @{
+        var a = Model.Count();
+
+    }
+    <tbody>
+        @if (a == 0)
+        {
+            <tr>
+                <td colspan="5">
+                    No Result Found
+                </td>
+            </tr>
+        }
+
+
+
+        @{    int i = 0; }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@(i += 1)</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.title)
+                </td>
+               
+                <td>
+                    @Html.DisplayFor(modelItem => item.seo_metaKeyword)
+                </td>
+               
+                <td>
+                    @item.createdDate.Value.ToString("dd-MMM-yyyy")
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", "news_s", new { id = item.newsID })"><i class="glyphicon glyphicon-pencil"></i></a>
+                    <a onclick="RemoveRecord('news',@item.newsID)"><i class="glyphicon glyphicon-trash"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+    function RemoveRecord(tableName, ID)
+    {
+        bootbox.confirm({
+            title: "Confirmation !",
+            message: "Are you sure to delete selected record",
+            buttons: {
+                cancel: {
+                    label: '<i class="fa fa-times"></i> Cancel'
+                },
+                confirm: {
+                    label: '<i class="fa fa-check"></i> Confirm'
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    
+                    $.ajax({
+                        url: '/Account/daleteRecords',
+                        type: 'POST',
+                        data: { 'tableName': tableName,'id': ID },
+                        success: function (data) {
+                            
+                            if (data == 1) {
+                                bootbox.confirm({
+                                    title: "Confirmation !",
+                                    message: "Record deleted",
+                                    buttons: {
+                                        confirm: {
+                                            label: '<i class="fa fa-check"></i> Confirm'
+                                        }
+                                    },
+                                    callback: function (result) {
+                                        window.location.href = window.location
+                                    }
+                                })
+                            }
+                            else {
+                                bootbox.alert({
+                                    title: "Alert !",
+                                    message: '<p>Some thing went wrong .</p>',
+                                    timeOut: 2000
+                                });
+
+                            }
+                        },
+                        error: function ()
+                        {
+                            bootbox.alert({
+                                title: "Alert !",
+                                message: '<p>Some thing went wrong .</p>',
+                                timeOut: 2000
+                            });
+                        }
+                    });
+                }
+
+            }
+        });
+    }
+</script>

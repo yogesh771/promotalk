@@ -1,0 +1,256 @@
+﻿@model promoTalk.Models.productCatalog
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutInternal.cshtml";
+}
+<link href="https://www.jquery-az.com/jquery/css/jquery.multiselect.css" rel="stylesheet" />
+<script src="https://www.jquery-az.com/jquery/js/multiselect-checkbox/jquery.multiselect.js"></script>
+
+@using (Html.BeginForm("Create", "productCatalogs", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+@{ if (Model.isOffer)
+    {
+        <h4>Flyer</h4>
+    }
+    else
+    { <h4>Catalog </h4> }
+}
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @{ if (Model.isOffer)
+                { <label class="control-label col-md-2">Flyer Catagory</label>
+
+                }
+                else
+                {
+                    <label class="control-label col-md-2">Catalog Catagory</label>
+
+                }
+            }
+
+            <div class="col-md-10">
+              @Html.DropDownList("productCategoryID", null, new { @id = "mySel", @multiple = "multiple", @class = "form-control 4colactive" }) 
+                    <input type="hidden" id="hdnproductCategoryID" name="hdnproductCategoryID" value="" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                @{ if (Model.isOffer)
+                    {<label class="control-label col-md-2">Flyer Supplier</label>
+                    }
+                    else
+                    {
+                        <label class="control-label col-md-2">Catalog Supplier</label>
+                    }
+                }
+
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.supplierID, new SelectList(ViewBag.supplierID, "supplierID", "supplierName"), " Supplier", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.supplierID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+               @{ if (Model.isOffer)
+                   {
+                    <label class="control-label col-md-2">Flyer Name</label>
+                   }
+                   else
+                   {
+                    <label class="control-label col-md-2">Catalog Name</label>
+
+                   }
+            }
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.productTitle, new { htmlAttributes = new { @class = "form-control", @onblur = "slugify(productTitle,slugURL)" } })
+                    @Html.ValidationMessageFor(model => model.productTitle, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.slugURL, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{ var isoffer = Model.isOffer ? 1 : 0;}
+                @Html.EditorFor(model => model.slugURL, new { htmlAttributes = new { @class = "form-control", @onblur = "checkExists(slugURL,'productCatalogs'," + Model.catalogID + "," + isoffer + ")" } })
+                @Html.ValidationMessageFor(model => model.slugURL, "", new { @class = "text-danger" })
+            </div>
+        </div>
+            @{ if (Model.isOffer)
+                {
+                    <input type="hidden" value="True" name="isOffer" />
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.offerProviderURl, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.offerProviderURl, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.offerProviderURl, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                       <label class="control-label col-md-2">Expire Date</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.offerExpireDate, new { htmlAttributes = new { @class = "form-control datetimepicker" } })
+                            @Html.ValidationMessageFor(model => model.offerExpireDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Image</label>
+                            <div class="col-md-9 choose-img">
+                                <img id="pic" src="http://electoindia.com/Logo/Emptyuser.jpg" alt="Image" width="300px" height="300px">
+                                <input type="file" id="photoA" name="files" class="choose-input">
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+
+                    @Html.HiddenFor(m => m.isOffer)
+                    <input type="hidden" value="http://beta.promotalks.biz" name="offerProviderURl" />
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.isPremeum, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-2">
+                            @Html.CheckBoxFor(m => m.isPremeum)
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Image</label>
+                            <div class="col-md-9 choose-img">
+                                <img id="pic" src="http://electoindia.com/Logo/Emptyuser.jpg" alt="Image" width="300px" height="300px">
+                                <input type="file" id="photoA" name="files" class="choose-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">PDF</label>
+                            <div class="col-md-9">
+                                <input type="file" id="PDF" name="files" class="choose-input" accept="application/pdf">
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" value="false" name="isPremeum" />
+                }
+            }
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" onclick="showSelectsd()" />
+                </div>
+            </div>
+        </div>
+                }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index", new { id = Model.isOffer == true ? 2 : 1 })
+    </div>
+    <script>
+        function readURL(input) {
+            
+            if (input.files && input.files[0]) {
+                //Get reference of FileUpload.
+                var fileUpload = document.getElementById("photoA");
+                if (fileUpload.value.length > 0) {
+                    //Check whether the file is valid Image.
+                    var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(.jpg|.png|.gif)$");
+                    if (regex.test(fileUpload.value.toLowerCase())) {
+                        var reader = new FileReader();
+                        var s = fileUpload.files[0];
+                        reader.readAsDataURL(s);
+                        reader.onload = function (e) {
+                            var image = new Image();
+                            image.src = e.target.result;
+                            image.onload = function () {
+                                
+                                var height = this.height;
+                                var width = this.width;
+
+                                    var reader1 = new FileReader();
+
+                                    reader1.onload = function (e) {
+                                        $('#pic').attr('src', e.target.result);
+                                    }
+
+                                    reader1.readAsDataURL(input.files[0]);
+
+                            };
+                        }
+                    }
+                    else {
+
+                        bootbox.alert({
+                            title: "Alert !",
+                            message: 'Please select .jpg,.png,.gif'
+                        });
+                        return false;
+                    }
+                }
+
+            }
+        }
+
+        $("#photoA").change(function () {
+            readURL(this);
+        });
+    </script>
+@{ var isOffer = Model.isOffer == true ? 2 : 1;}
+    @{var res = ViewBag.result;}
+    <script>
+        
+        if ('@res'!= null)
+        {
+            if ('@res' == 's')
+            {
+                bootbox.alert({
+                    title: "Success !",
+                    message: "Record saved",
+
+                    callback: function (result) {
+                        window.location.href = '/productCatalogs/Index/@isOffer';
+                    }
+                })
+            }
+            if ('@res' == 'f') {
+                bootbox.alert({
+                    title: "Failure !",
+                    message: '<p>Record not saved .</p>',
+                    timeOut: 2000
+                });
+            }
+           
+        }
+    </script>
+    <script>
+
+        $('#mySel').multiselect({
+            columns: 2,
+            placeholder: 'Select Category'
+        });
+    </script>
+    <script type="text/javascript">
+
+        function showSelectsd() {
+            
+            var selO = document.getElementById('mySel');
+            var hdnproductCategoryID = document.getElementById('hdnproductCategoryID');
+            var selValues = [];
+            var v = '';
+            for (i = 0; i < selO.length; i++) {
+                if (selO.options[i].selected) {
+                    selValues.push(selO.options[i].value);
+                     v = v+selO.options[i].value + ',';
+                }
+            }
+            hdnproductCategoryID.value=v;
+    }
+    </script>
+
+
+

@@ -1,0 +1,42 @@
+﻿@model IEnumerable<promoTalk.Models.tbl_events>
+@{
+    ViewBag.Title = "events";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<header class="entry-header">
+
+    <div class="title_border">
+        <h2>Events</h2>
+    </div>
+</header>
+<div class="container">
+    <div class="container-a">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+
+                <div class="col-lg-4">
+                    <div class="event-box">
+                        <div class="col-lg-3">
+                            @item.dateTime.ToString("MMM")<br />
+                            @item.dateTime.ToString("dd")<br />
+                            @item.dateTime.ToString("yyyy")<br />
+                            @*@item.dateTime.ToString("hh:mm:ss tt")*@
+                        </div>
+                        <div class="col-lg-9">
+                            <span>@Html.DisplayFor(modelItem => item.name)<br /></span>
+                            @Html.DisplayFor(modelItem => item.venue)<br />
+                            @item.TillDateime.ToString("dddd, MMM dd yyyy")<br />
+                            @Html.DisplayFor(modelItem => item.Hoster)<br />
+                            @Html.Raw((item.description.Length > 40 ? item.description.Substring(0, 40) : item.description))
+                            <br />
+                            <a href="@Url.Action("EventDescription", "Home", new { id = item.eventID })">Read More</a>
+                         
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,93 @@
+﻿@model IEnumerable<promoTalk.Models.tbl_events>
+<table class="table" id="tblData">
+    <thead>
+        <tr>
+            <th><img src="~/images/arrow.jpg" width="27" height="34"></th>
+            <th>
+                @Html.DisplayNameFor(model => model.dateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.venue)/@Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hoster)
+            </th>            
+            <th>
+                @Html.DisplayNameFor(model => model.createdDate)
+            </th>
+            <th></th>
+        </tr>
+
+    </thead>
+    @{
+        var a = Model.Count();
+
+    }
+    <tbody>
+        @if (a == 0)
+        {
+            <tr>
+                <td colspan="13">
+                    No Result Found
+                </td>
+            </tr>
+        }
+
+
+
+        @{    int i = 0; }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@(i += 1)</td>
+                <td>
+                  From :   @item.dateTime.ToString("MMM/dd/yyyy")<br />
+                  Till :   @item.TillDateime.ToString("MMM/yyyy")
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.venue)<br />
+                @Html.DisplayNameFor(model => model.Location)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Hoster)
+                </td>
+              
+              
+                <td>
+                    @item.createdDate.ToString("MMM/dd/yyyy")
+                </td>
+            <td>
+                <a href="@Url.Action("Edit", "event_s", new { id = item.eventID })"><i class="glyphicon glyphicon-pencil"></i></a>                
+                <a href="@Url.Action("Delete", "event_s", new { id = item.eventID })"><i class="glyphicon glyphicon-trash"></i></a>
+
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<script>
+    $(function () {
+        $("#tblData").slimtable({
+            tableData: null,
+            dataUrl: null,
+            itemsPerPage: 100,
+            ipp_list: [10, 50, 100],
+            colSettings: [],
+            text1: "items/page",
+            text2: "Loading...",
+            sortStartCB: null,
+            sortEndCB: null,
+            aoColumnDefs: [{
+                'bSortable': false,
+                'aTargets': [-1] /* 1st one, start by the right */
+            }]
+        });
+    });
+</script>

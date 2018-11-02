@@ -1,0 +1,106 @@
+﻿
+@{
+    <title>Promo Products Offers</title>
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>*@
+    <script>
+    function pageNavigate() {       
+        $("html, body").animate({ scrollTop: 250 }, 600);        
+    }
+    </script>
+
+<script src="~/Scripts/list.min.js"></script>
+    <style>
+        .pagination li {
+            display: inline-block;
+            padding: 5px;
+        }
+    </style>
+}
+<header class="entry-header">
+
+    <div class="title_border">
+        <h2> Promo-Products Flyers</h2>
+    </div>
+</header>
+<div class="page-top-title">
+    Search Latest Promotional Product Flyers from Industry's top Suppliers
+
+</div>
+<div class="catelog-main-search">
+
+    <div class="container">
+        <div class="search-box">
+            <ul>
+                <li>
+                    @Html.DropDownList("productCategoryID", null, "All Product Categories", htmlAttributes: new { @class = "postform" })
+
+                </li>
+                <li>
+                    @Html.DropDownList("supplierID", null, "All Suppliers", htmlAttributes: new { @class = "postform" })
+                </li>
+                <li>
+                    <input type="hidden" name="ofsubmitted" value="1">
+                    <input type="button" value="Search" onclick="return searchResult();">
+                    <input type="button" value="Reset" onclick="return reset();">
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="main-content catalog" id="viewResult"></div>
+<script>
+    $(document).ready(function () {
+        searchResult();
+    })
+</script>
+
+<script>
+
+        function searchResult() {
+            
+            var productCategoryID = $("#productCategoryID").val();
+            var supplierID = $("#supplierID").val();
+            if (productCategoryID == "") {
+                productCategoryID = 0
+            }
+            if (supplierID == "") {
+                supplierID = 0
+            }
+            
+
+            $.ajax({
+                url: '/Home/_partialProductOffers',
+                type: 'POST',
+                data: { 'productCategoryID': productCategoryID, 'supplierID': supplierID, 'isOffer': 1, 'isPrenium': 1 },
+                success: function (data) {
+                    
+                    $('#viewResult').html(data);
+                },
+                error: function () {
+                    bootbox.alert({
+                        title: "Alert !",
+                        message: '<p>Whooaaa! Something went wrong..</p>',
+                        timeOut: 2000
+
+                    });
+
+                }
+            });
+        }
+</script>
+
+<script>
+    function reset() {
+         $("#productCategoryID").val('');
+         $("#supplierID").val('');
+        searchResult();
+    }
+
+</script>
+<style>
+    .main-content.catalog ul li img {
+        height: 300px;
+    }
+</style>

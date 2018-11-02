@@ -1,0 +1,46 @@
+﻿
+@model IEnumerable<promoTalk.Models.news>
+@{
+   
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+<header class="entry-header">
+
+    <div class="title_border">
+        <h2>Promo  News</h2>
+    </div>
+</header>
+    <div class="main-content news">
+        <div class="container">
+            <ul class="blog-market news">
+                @foreach (var item in Model)
+            {
+                    <li>
+                        <a href="@Url.Action("News_Description",  new {  title = item.slugURL})"><img src='@item.seo_OGImage' alt="" /></a>
+                     
+                        <a href="@Url.Action("News_Description",  new { title =item.slugURL })"><h3 class="news-title">@Html.DisplayFor(modelItem => item.title)</h3></a>
+                        @Html.Raw(item.shortDescription)     
+                        @Html.ActionLink("Read More", "News_Description",    new {  @class = "PoClass", title = item.slugURL }, new { @class= "readmore"})                  
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+
+<!--<script src="/Scripts/columnstojs.js"></script>
+<script>
+    $('.colums1').columnsToJs({
+    count: 3,
+    gap: 20,
+    fixed: true,
+    check: 10,
+    interval: false,
+    debug: false,
+    });
+    if (window.screen.width <= 736) {
+    $('.colums1').columnsToJs({
+    count: 1,
+    });
+    }
+  </script>-->

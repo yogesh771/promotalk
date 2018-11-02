@@ -1,0 +1,10 @@
+﻿@model IEnumerable<promoTalk.Models.buisinessService>
+
+@{ var str = ""; var str1 = "";
+foreach (var item in Model)
+{
+    str = str + item.service.ServiceName + ", ";
+}
+    str1 = str.Substring(0, str.Length - 2);
+    <p>@str1</p>
+}

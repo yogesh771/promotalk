@@ -1,0 +1,109 @@
+﻿@using promoTalk.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutInternal.cshtml";
+}
+@{
+    var loginID = BaseUtil.GetSessionValue(AdminInfo.LoginID.ToString());
+}
+@{ var isoffers_ = @ViewBag.isoffers; }
+   @{ if (loginID != null)
+       {
+        <p>
+            @Html.ActionLink("Create New", "Create", new { id = isoffers_ })
+        </p>
+       }
+}
+
+<div class="col-md-9 box-2 running-campaigns sidebar-right">
+    <div class="col-md-12">
+      @{
+          if (isoffers_ == 1)
+          {
+        <h4>Catalogs List </h4>
+          }
+          else
+          {
+            <h4>Flyers List </h4>}
+    }
+        <hr>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            @Html.DropDownList("productCategoryID", null,"Category", htmlAttributes: new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            @Html.DropDownList("supplierID", null,"Supplier", htmlAttributes: new { @class = "form-control" })
+        </div>
+    </div>
+    @*@{
+        if (isoffers_ != 2)
+        {
+
+            <div class="col-md-3">
+                <div class="form-group">
+                 <input type="checkbox" name="isPremium" id="isPremium" /> Premeum
+                </div>
+            </div>
+           
+        }
+    }*@
+    <input type="hidden" value='@isoffers_'   id="hiddenof"/> 
+     <div class="col-md-1">
+        <div class="form-group">
+            <input type="button" class="btn btn-defaul" value="Search" onclick="return searchResult();" />
+        </div>
+    </div>
+    <div class="table-responsive col-lg-12" id="viewResult">
+        <div class="col-lg-12 white-box">
+            <p>Please use above search criteria to view the result list</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () { searchResult(); })
+</script>
+<script>
+
+    function searchResult() {
+        
+        var productCategoryID = $("#productCategoryID").val();
+        var supplierID = $("#supplierID").val();
+        if (productCategoryID == "") {
+            productCategoryID = 0
+        }
+        if (supplierID == "") {
+            supplierID = 0
+        }
+        var isPremium =false;
+        //if (document.getElementById("isPremium") != null) {
+        //    isPremium = document.getElementById("isPremium").checked;
+        //}
+       
+        var isOffer = $("#hiddenof").val()==2?true:false;
+      
+        
+
+        $.ajax({
+            url: '/productCatalogs/_partialProductCatalogs',
+            type: 'POST',
+            data: { 'productCategoryID': productCategoryID, 'supplierID': supplierID, 'isPremium': isPremium, 'isOffer': isOffer },
+            success: function (data) {
+                
+                $('#viewResult').html(data);
+            },
+            error: function () {
+                bootbox.alert({
+                    title: "Alert !",
+                    message: '<p>Whooaaa! Something went wrong..</p>',
+                    timeOut: 2000
+
+                });
+
+            }
+        });
+    }
+</script>

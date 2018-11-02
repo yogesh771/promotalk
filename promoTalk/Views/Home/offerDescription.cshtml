@@ -1,0 +1,306 @@
+﻿@model promoTalk.Models.productCatalog
+
+@{   
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+  
+<div class="container top-m">
+<div class="container-a off-top col-lg-8">
+<div class="offer-d offer-d1" id="emailContentpickup">
+            <h4 id="productTitle">@Html.DisplayFor(model => model.productTitle)</h4>
+			
+<div class="col-lg-12">
+            
+
+            
+            
+			
+            <div class="col-lg-12">
+			<div class="offer-main text-center">
+                <a href='@Model.offerProviderURl' target="_blank"> <img src='@Model.thumbImageURL' alt="Image" width="85%" /></a>
+            </div>
+			</div>
+			</div>
+            
+
+        </div>
+</div>
+
+
+
+<div class="col-lg-4">
+<div class="col-lg-12 event-box-left event-box-left1 " style="padding:0px 0 15px; float:left;">
+<h5>Details</h5>
+	<div class="col-lg-12" style="padding:0px">
+	<div class="col-lg-12" style="padding:0px">
+	<div class="col-lg-12" style="padding:0px;">
+                        <label>Supplier </label>
+                     @Model.supplier.supplierName
+                    @*<h5>@Model.supplier.supplierName</h5>*@
+                    </div>
+                <b>Product Categories </b> @ViewBag.catalogcatagory 
+				
+				
+            </div>
+                @{ if (Model.offerExpireDate != null)
+                    {
+                       <b>Expires On</b> @Model.offerExpireDate.Value.ToString("MM/dd/yyyy")
+                    }
+                }
+
+            </div>
+            <div class="col-lg-12 expires-a" style="padding:15px 0 0 0">
+                @{ if (Model.offerProviderURl != null)
+                    {
+                        <b><a class="extraClass" href='@Model.offerProviderURl' target="_blank">View Offer Website</a><br /></b>
+                    }
+                }
+
+            </div>
+    <div class="">
+		<div class="l-fixed">
+        <button class="red-tooltip" id="btn-share" data-modal-title="Modal Title" data-modal-description="Modal Description" data-facebook-label="Share on Facebook" data-twitter-label="Share on Twitter" data-twitter-text="Twitter Text" data-linkedin-label="Share on LinkedIn" data-linkedin-title="LinkedIn Title" data-linkedin-summary="LinkedIn Summary" data-email-label="Share via Email" data-email-subject="Email Subject"><img src="/Content/img/share.png" alt="Image"></button>
+        <button class="red-tooltip" id="btn-send" data-toggle="tooltip" data-placement="right" title="Send"><img src="/Content/img/send.png" alt="Image"></button>
+            @{ var imgName_ = Model.thumbImageURL;
+                var imgName1 = imgName_.LastIndexOf("_");
+                var lenth = imgName_.LastIndexOf(".")- imgName_.LastIndexOf("_");
+                var imgname = imgName_.Substring(imgName1+1, lenth );
+                }
+        <button class="red-tooltip" data-toggle="tooltip" data-placement="right" title="Save" onclick="openModel('@Model.thumbImageURL', '@imgname')"><img src="/Content/img/save-icon.png" alt="Image"></button>
+        <a class="red-tooltip" data-toggle="tooltip" data-placement="right" title="Order Custom Flyer"  href="@Url.Action("Requestform", "customorder", new { id= Model.catalogID, category="offer" })">
+            <img src="/Content/img/order-icon.png" alt="Image">
+        </a>
+		</div>
+        </div>
+		</div>
+    
+        @{if (ViewBag.TwoMoreCatalogs != null && ViewBag.TwoMoreCatalogs.Count > 0)
+            {
+                <div class="col-lg-12 event-box-left event-box-left1 event-box-left1-more margin-b " style="padding:0px 0 15px; float:left;">
+                    <h5>More Offers From</h5>
+					<div style="float:left; width:100%; margin-bottom:15px;">
+					<label>Supplier </label> @Model.supplier.supplierName</div>
+					
+                    @{foreach (var c in (IEnumerable<promoTalk.Models.productCatalog>)ViewBag.TwoMoreCatalogs)
+                        {
+                            <a href="@Url.Action("offerDescription", "Home", new { Title=c.slugURL })">
+                                <img src='@c.thumbImageURL' alt='@c.productTitle'>
+                                <span style="text-align:center; margin-top: 9px;
+                                          display: block;
+                                          margin-bottom: 25px;
+                                          font-weight: bold;">@c.productTitle</span>
+                                </a>
+                        }
+                    }
+
+</div>
+                        }
+        }
+
+    
+    </div>
+	</div>
+
+<div class="modal fade" tabindex="-1" id="mailModal"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    ×
+                </button>
+                <h4 class="modal-title">Send Email </h4>
+            </div>
+            <div class="modal-body" style="overflow:scroll">  
+<div class="blue-bg1">			
+                <p> <span>To Email</span> <input type="text" id="txtTo" value="" />
+                <button id="btnsendEmail">Send Email</button></p> 
+</div>				
+               <div id="emailContentTobesend"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function printData() {
+        var divToPrint = document.getElementById("emailContentpickup");
+        newWin = window.open("");
+        newWin.document.write(divToPrint.outerHTML);
+        newWin.print();
+        newWin.close();
+    }
+
+    $('#cmd').on('click', function () {
+        printData();
+    })
+</script>
+<script>
+    $('#btn-send').click(function () {
+        
+        document.getElementById('productTitle').innerHTML = '';
+        var emailContentpickuphtml = document.getElementById('emailContentpickup').innerHTML;
+        document.getElementById('emailContentTobesend').innerHTML = emailContentpickuphtml;
+        $('#mailModal').modal();
+        $('#mailModal').show();
+    })
+</script>
+<script src="~/Scripts/EmailVaidation.js"></script>
+<script>
+    $('#btnsendEmail').click(function () {
+        
+           
+            var txt_email = $("#txtTo").val();
+            if (txt_email== "")
+            {
+                bootbox.alert({
+                    title: "Alert !",
+                    message: '<p>Please enter your name and valid email id</p>',
+                    timeOut: 2000
+
+                });
+                return
+            }
+            var isvalid=  emailvalidation(txt_email);
+            if(!isvalid){
+                bootbox.alert({
+                    title: "Alert !",
+                    message: '<p>Please enter valid email id</p>',
+                    timeOut: 2000
+
+                });
+                return
+            }
+
+            
+            var innerHTML_=document.getElementById('emailContentTobesend').innerHTML ;
+            var url=window.location.href;
+            $.ajax({
+                url: '/Home/SendOfferToEmail',
+                type: 'POST',
+                data: { 'txt_email': txt_email,  'url': url },
+                success: function (data) {
+                    
+                    if(data=="ok")
+                    {
+                        bootbox.alert({
+                            title: "Done !",
+                            message: '<p>Mail sent, </p>',
+                            timeOut: 2000
+
+                        });
+                    }
+                    else
+                    {
+                        bootbox.alert({
+                            title: "Alert !",
+                            message: '<p>Whooaaa! Something went wrong..</p>',
+                            timeOut: 2000
+
+                        });
+                    }
+                },
+                error: function () {
+                    bootbox.alert({
+                        title: "Alert !",
+                        message: '<p>Whooaaa! Something went wrong..</p>',
+                        timeOut: 2000
+
+                    });
+
+                }
+            });
+        })
+    
+</script>
+ 
+
+<style>  
+
+    .extraClass {
+        color: black !important;
+    }
+
+        .extraClass:hover, .extraClass:focus {
+            text-decoration: none !important;
+        }
+</style>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+	
+    $("button").tooltip();
+
+});
+
+$("#btn-share").click(function() {
+	var shareHtml = "",
+		shareUrl = window.location.href,
+		el = $(this),
+		shareModalTitle = el.data("modal-title"),
+		shareModalDescription = el.data("modal-description"),
+		shareFacebookLabel = el.data("facebook-label"),
+		shareTwitterLabel = el.data("twitter-label"),
+		shareTwitterText = el.data("twitter-text"),
+		shareLinkedInLabel = el.data("linkedin-label"),
+		shareLinkedInTitle = encodeURIComponent(el.data("linkedin-title")),
+		shareLinkedInSummary = encodeURIComponent(el.data("linkedin-summary")),
+		shareLinkedInSource = window.location.protocol + "//" + window.location.hostname,
+		shareEmailLabel = el.data("email-label"),
+		shareEmailSubject = el.data("email-subject");
+	
+	shareHtml += '<div class="modal fade in text-center" id="modal-share" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">'+
+	'<div class="modal-dialog">'+
+		'<div class="modal-content">'+
+			'<div class="modal-header">'+
+				'<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>'+
+				
+	
+				
+			'</div>'+
+			'<div class="modal-body">'+
+				'<ul class="list-unstyled">';
+	
+					if (shareFacebookLabel != undefined) {
+						shareHtml += '<li><a href="https://www.facebook.com/sharer/sharer.php?u='+shareUrl+'" title="'+shareFacebookLabel+'" target="_blank" class="btn btn-facebook"><i class="icon-facebook"></i> '+shareFacebookLabel+'</a></li>';
+					}
+					if (shareTwitterLabel != undefined) {
+						shareHtml += '<li><a href="https://twitter.com/intent/tweet?text='+shareTwitterText+'&url='+shareUrl+'" title="'+shareTwitterLabel+'" target="_blank" class="btn btn-twitter"><i class="icon-twitter"></i> '+shareTwitterLabel+'</a></li>';
+					}
+					if (shareLinkedInLabel != undefined) {
+						shareHtml += '<li><a href="https://www.linkedin.com/shareArticle?mini=true&url='+shareUrl+'&title='+shareLinkedInTitle+'&summary='+shareLinkedInSummary+'&source='+shareLinkedInSource+'" title="'+shareLinkedInLabel+'" target="_blank" class="btn btn-linkedin"><i class="icon-linkedin"></i> '+shareLinkedInLabel+'</a></li>';
+					}
+					
+	
+				'</ul>'+
+			'</div>'+
+		'</div>'+
+	'</div>'+
+'</div>';
+	
+	$("body").append(shareHtml);
+	
+	$('#modal-share').modal()
+});
+</script>
+
+<script>
+    $(function () {    
+        $('#cmd1').click(function () {
+            
+            var url=window.location.href;
+            $.ajax({
+                url: '/Home/PdfSharpConvert',
+                type: 'POST',
+                data: { 'url': url },
+                success: function (data) {
+                    
+                }
+            });
+        })
+        }); 
+</script>
+
+<script>
+
+</script>

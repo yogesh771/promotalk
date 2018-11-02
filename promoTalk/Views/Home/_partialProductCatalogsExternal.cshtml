@@ -1,0 +1,64 @@
+﻿@using System.Text.RegularExpressions;
+@model IEnumerable<promoTalk.Models.getProductCatalog_sp_Result>
+
+<div class="container">
+    @{ if (Model.Count() <= 0)
+        {
+            <div style="text-align: center"> <h3>No Results Found</h3></div>
+        }
+        else
+        {
+            <ul>
+                @foreach (var item in Model.Where(x => x.isPremeum == true))
+                {
+
+                    <li>
+                        <span><img src='../images/premimum.png' alt="premium" /></span>
+                        <a href="@Url.Action("catalogDescription", "Home", new { title =item.slugURL })">
+                            <h5>@item.supplierName</h5>
+                            <div class="imgheightfix"><img src='@item.thumbImageURL' alt="Image" /></div>
+                            <span class="cat-text">@Html.DisplayFor(modelItem => item.productTitle)</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+            <ul>
+                @foreach (var item in Model.Where(x => x.isPremeum == false))
+                {
+                    <li>
+
+                        <a href="@Url.Action("catalogDescription", "Home", new { title = item.slugURL })">
+                            <h5>@item.supplierName</h5>
+								<div class="imgheightfix"><img src='@item.thumbImageURL' alt="Image" /></div>
+                            <span class="cat-text">@Html.DisplayFor(modelItem => item.productTitle)</span>
+                        </a>
+
+
+                    </li>
+
+                }
+
+            </ul>
+        }
+    }
+</div>
+@*@{if (@item.pdfURL != null)
+        {
+            <a class="view-btn btn-cat" title="View Catalog" href='~/index.html?pdf=@item.pdfURL.Substring(@item.pdfURL.LastIndexOf("/") + 1, @item.pdfURL.LastIndexOf(".") - @item.pdfURL.LastIndexOf("/"))'>View</a>
+        }
+        else
+        {
+            <a class="view-btn btn-cat" title="View Catalog"></a>
+        }
+    }
+    <a class="order-btn btn-cat" title="Order Catalog" href="#">Order</a>*@
+@*<a href="@Url.Action("catalogDescription", "Home", new { id = item.catalogID, title = Regex.Replace(item.productTitle, @"[<^>+/\'.{}()#$@!:;?]+", " ").Trim().Replace(" ", "-").ToLower() })">
+    <img src='@item.thumbImageURL' alt="Image" />
+    <span class="cat-text">@Html.DisplayFor(modelItem => item.productTitle)</span>
+   @{if (@item.pdfURL != null)
+                {
+                    <a class="view-btn btn-cat" title="View Catalog" href='~/index.html?pdf=@item.pdfURL.Substring(@item.pdfURL.LastIndexOf("/") + 1, @item.pdfURL.LastIndexOf(".")-@item.pdfURL.LastIndexOf("/"))'>View</a>
+                }
+            }
+            <a class="order-btn btn-cat" title="Order Catalog" href="#">Order</a>
+    </a>*@

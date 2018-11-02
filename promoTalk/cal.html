@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>   
+       <script src="Scripts/moment.min.js"></script>
+    <script type="text/javascript">
+        moment().format();
+    </script>
+       <script src="Scripts/fullcalendar.min.js"></script>  
+       <link href="Scripts/fullcalendar.min.css" rel="stylesheet" />
+
+       <link href="Content/base/minified/jquery-ui.min.css" rel="stylesheet" />
+      
+       <script src="Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            InitializeCalendar();
+        });
+        function InitializeCalendar() {
+            //-- start date and end date criteria.. you can get it from user input..
+            var startDate = "2018-07-01";
+            var endDate = "2018-07-30";
+            //-- start date and end date criteria.. you can get it from user input..
+
+            //-- ajax call to fetch calendar data from database
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                data: "{ 'StartDate': '" + startDate + "', 'EndDate': '" + endDate + "' }",
+                url: "Home/GetCalendarData",
+                dataType: "json",
+                success: function (data) {
+                    debugger
+                    $('#calendar').empty();
+                    $('#calendar').fullCalendar({
+                        header: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'month,agendaWeek,agendaDay,List'
+                        },
+                        weekNumbers: true,
+                        height: 600,
+                        allDayText: 'Events',
+                        selectable: true,
+                        overflow: 'auto',
+                        editable: false,
+                        firstDay: 1,
+                        events: $.map(data, function (item, i) {
+                            //-- here is the event details to show in calendar view.. the data is retrieved via ajax call will be accessed here
+                            var eventStartDate = new Date(parseInt(item.EventStartDate.substr(6)));
+                            var eventEndDate = new Date(parseInt(item.EventEndDate.substr(6)));
+
+                            var event = new Object();
+                            event.id = item.EventId;
+                            event.start = new Date(eventStartDate.getFullYear(), eventStartDate.getMonth(), eventStartDate.getDate(), eventStartDate.getHours(), 0, 0, 0);
+                            event.end = new Date(eventEndDate.getFullYear(), eventEndDate.getMonth(), eventEndDate.getDate(), eventEndDate.getHours() , 0, 0, 0);
+                            event.title = item.Title;
+                            event.allDay = item.AllDayEvent;
+                            event.EventDescription = item.EventDescription;
+                            return event;
+                        }),
+                            eventRender: function (event, element) {
+                                element.attr('href', 'javascript:void(0);');
+                                element.click(function () {
+                                    debugger
+                                    $("#startTime").html(moment(event.start).format('MMM Do h:mm A'));
+                                    $("#endTime").html(moment(event.end).format('MMM Do h:mm A'));
+                                    $("#eventInfo").html(event.EventDescription);
+                                    $("#eventLink").attr('href', event.url);
+                                    $("#eventContent").dialog({ modal: true, title: event.title, width: 350 });
+                                });
+                            }                        
+                    });
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    //-- log error
+                }
+            });
+        }     
+        
+       </script>
+       <style>
+           .ui-dialog .ui-dialog-titlebar-close span {margin: 0;position: absolute;top: -1px;left: -2px;}
+.ui-dialog .ui-dialog-titlebar-close {font-size:0px;}
+.ui-dialog{z-index:9;}
+       </style>
+</head>
+<body>
+    <form id="form1">      
+        <div id="calendar" style="height: 600px; width: 600px;">
+        </div>
+    </form>
+    <div id="eventContent" title="Event Details" style="display:none;">
+        Start: <span id="startTime"></span><br>
+        End: <span id="endTime"></span><br><br>
+        <p id="eventInfo"></p>
+        <p><strong><a id="eventLink" href="" target="_blank">Read More</a></strong></p>
+    </div>
+</body>
+</html>

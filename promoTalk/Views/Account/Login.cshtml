@@ -1,0 +1,56 @@
+﻿@model promoTalk.Models.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal login">
+        <h4>Login</h4>
+        <hr />
+        <span>@ViewBag.msg</span>
+        <div class="form-group">
+            @Html.LabelFor(model => model.userName, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+               
+                @Html.EditorFor(model => model.userName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.userName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.password, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-10">
+                <input type="submit" value="Login" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+<style>
+    .login {
+            Top: 40%;
+    left: 25%;
+    position: relative;
+    width: 40%;
+    margin: 50px 50px;
+    padding: 50px;
+    background-color: #eff;
+    background: #fff;
+    box-shadow: 1px 2px 3px 2px rgba(0, 0, 0, 0.39);
+    }
+</style>
+
+    

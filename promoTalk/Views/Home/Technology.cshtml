@@ -1,0 +1,28 @@
+﻿
+@model IEnumerable<promoTalk.Models.technology>
+@{
+    ViewBag.Title = "Technology";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<header class="entry-header">
+
+    <div class="title_border">
+        <h2>Promo Technology</h2>
+    </div>
+</header>
+<div class="main-content news">
+    <div class="container">
+        <ul>
+            @foreach (var item in Model)
+            {
+                <li>
+                    <a href="@Url.Action("technology_Description",  new {  title =  item.slugURL })"><img src='@item.seo_OGImage' alt="" /></a>
+                   
+                    <a href="@Url.Action("technology_Description",  new {title = item.slugURL })"><h3 class="news-title">@Html.DisplayFor(modelItem => item.title)</h3></a>
+                    @Html.Raw(item.shortDescription)
+                    @Html.ActionLink("Read More", "technology_Description", new {  title = item.slugURL}, new{@class="readmore"})
+                </li>
+            }
+        </ul>
+    </div>
+</div>

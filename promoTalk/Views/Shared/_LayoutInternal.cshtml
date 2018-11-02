@@ -1,0 +1,253 @@
+﻿<!DOCTYPE html>
+<html>
+
+@using promoTalk.Models
+
+@{ var loginID = BaseUtil.GetSessionValue(AdminInfo.LoginID.ToString());}
+<head id="Head1">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+    <title>Camera Ready Art - Vector Art, Artwork Services, EPS Vector Art, Logo Redraw, Graphic Design and Website Services</title>
+    <link href="~/Content/style.css" type="text/css" rel="stylesheet" />
+    @*<link rel='stylesheet' id='font-awesome-css' href='http://www.promotalks.biz/wp-content/plugins/post-grid/assets/frontend/css/font-awesome.min.css?ver=4.9.4' type='text/css' media='all' />*@
+    <link rel='stylesheet' id='twentytwelve-fonts-css' href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&#038;subset=latin,latin-ext' type='text/css' media='all' />
+    <link rel='stylesheet' id='twentytwelve-style-css' href='~/Content/style-1.css' type='text/css' media='all' />
+   <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+ 
+
+  
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <link href="~/Content/base/slimtable.css" rel="stylesheet" />
+    <script src="~/Scripts/slimtable.js"></script>
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootbox.min.js"></script>
+    <link href="~/Content/base/minified/jquery-ui.min.css" rel="stylesheet" />
+    
+    @*<script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-1.9.1.min.js"></script>*@
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <link href="~/Scripts/simple.datagrid.css" rel="stylesheet" />
+    <script src="~/Scripts/simple.datagrid.js"></script> 
+    <script src="~/Scripts/jquery.mockjax.js"></script> 
+    
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+</head>
+
+<body class="home">
+    <div class="headermn">
+        <div class="container">
+            <div class="logo"><a href="http://beta.promotalks.biz/">Promo<strong>Talks</strong></a></div>
+            <div class="menutrigger">
+                <div class="c-hamburger c-hamburger--htx"><span>Toggle Menu</span></div>
+            </div>
+            <!--<div class="newsletter">
+                    </div>-->
+            <div class="navmn top-menu" id="cssmenu01">
+                <div class="menu-top-navigation-container">
+                    <ul id="menu-top-navigation" class="nav-menu">                     
+                               
+                              
+                                @*<li id="menu-item-3948" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3948">
+                                    <a href="@Url.Action("Index","states")"> State</a>
+                                </li>
+                                <li id="menu-item-3948" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3948">
+                                    <a href="@Url.Action("Index","countries")"> Country</a>
+                                </li>*@                               
+                               
+                                <li id="menu-item-3948" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3948">
+                                    <a href="@Url.Action("Logout", "Account")">Log Out</a>
+                                </li>                            
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content_main">
+        <div class="col-lg-2">
+            <div class="sidebar">
+                <h4>Catalogs</h4>
+                <ul class=".sidebar-menu">
+                    <li><a href="@Url.Action("Index","productCatalogs", new { id=1})">All Catalogs</a></li>
+                    <li><a href="@Url.Action("Index","suppliers", new { id=1})">Catalog Suppliers</a></li>
+                    <li> <a href="@Url.Action("Index","productCategories", new { id=1})">Catalog Product Categories</a></li>
+                </ul>
+                <br />
+                <h4>Flyers</h4>
+                <ul class=".sidebar-menu">
+                    <li>
+                        <a href="@Url.Action("Index","productCatalogs", new { id=2})">All Flyers</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index","suppliers", new { id=2})">Flyers Supplier</a>
+                    </li>
+                    <li> <a href="@Url.Action("Index","productCategories", new { id=2})">Flyers Product Categories</a></li>
+                </ul>
+
+                    <br />
+                <h4>Events</h4>
+                <ul class=".sidebar-menu">
+                    <li>
+                        <a href="@Url.Action("Index","event_s")"> Events</a>
+                    </li>
+                </ul>
+
+                <br />
+                <h4>Content</h4>
+                <ul class=".sidebar-menu">
+                    <li>
+                        <a href="@Url.Action("Index","news_s")"> News</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index","marketing_s")"> Marketing</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index","technologie_s")"> Technology</a>
+                    </li>
+                </ul>
+                <br />
+                <h4>Business Listing</h4>
+                <ul class=".sidebar-menu">
+                    <li>
+                        <a href="@Url.Action("Index","services")"> Categories</a>
+                    </li>
+                    <li> <a href="@Url.Action("Index","buisinessInformations")"> Business Lists</a></li>
+                </ul>
+                <h4>Admin</h4>
+                <ul class=".sidebar-menu">
+                    <li>
+                        <a href="@Url.Action("Index","customorder")"> Custom Order</a>
+                    </li>
+                    <li> <a href="@Url.Action("Index","subscribersInformation")"> subscribers Lists</a></li>
+                </ul>
+</div>
+        </div>
+        <div class="col-lg-10">
+            @RenderBody()
+        </div>
+    </div>
+    <script type="text/javascript">
+
+            $(function () {
+                $('.datetimepicker').datetimepicker();
+            });
+    </script>
+
+
+
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('TextArea').summernote();
+    });
+    </script>
+</body>
+<style>
+    .sidebar {
+    width: 100%;
+    display: block;
+    font-weight: 200;   
+    position: absolute;
+    background: #000;
+    height: 100%;
+    background-size: cover;
+    background-position: 30% 50%;
+}
+    .sidebar-menu {
+        list-style: none;
+        margin: 40px 0 0;
+        padding: 0;
+    }
+        .sidebar-menu li {
+            display: block;
+            float: left;
+            width: 100%;
+            margin: 0 0 30px;
+        }
+</style>
+</html>
+
+<script>
+    $(function () {
+        $("#tblData").slimtable({
+            tableData: null,
+            dataUrl: null,
+            itemsPerPage: 100,
+            ipp_list: [10, 50, 100],
+            colSettings: [],
+            text1: "items/page",
+            text2: "Loading...",
+            sortStartCB: null,
+            sortEndCB: null,
+            aoColumnDefs: [{
+                'bSortable': false,
+                'aTargets': [-1] /* 1st one, start by the right */
+            }]
+        });
+    });
+</script>
+<script>
+    function checkExists(elementID,tbleName,ID,isoffer)
+    {
+        
+        slugURL = $(elementID).val();
+        $.ajax({
+            url: '/Account/isSlugExist',            
+            data: { 'slugURL': slugURL, 'tblname': tbleName, 'ID': ID, 'isOffer': isoffer },
+            success: function (data) {
+                
+                if (data=="False") {
+                    bootbox.alert({
+                        title: "Alert !",
+                        message: '<p>Slug URL already Exists.</p>',
+                        timeOut: 2000
+                    });
+                }               
+            },
+            error: function () {
+                bootbox.alert({
+                    title: "Alert !",
+                    message: '<p>Some thing went wrong .</p>',
+                    timeOut: 2000
+                });
+            }
+        });
+    }
+</script>
+<script type="text/javascript">
+         function slugify(ElementID, targetElementID) {
+             
+            var url=  $(targetElementID).val()
+            if (url == "")
+            {
+                var newurl = $(ElementID).val();              
+                    newurl = newurl.replace(/[^A-Z0-9]+/ig, "-");
+                    newurl = newurl.replace(" ", "-");
+                    $(targetElementID).val(newurl.toLowerCase())
+            }          
+           }
+
+</script>
+
+@{var res1 = ViewBag.result1;}
+<script>
+    
+    if ('@res1' != null) {
+        if ('@res1' == 'EXISTS') {
+            bootbox.alert({
+                title: "Alert !",
+                message: '<p>Slug URL already Exists.</p>',
+                timeOut: 2000
+            });
+        }
+    }
+</script>

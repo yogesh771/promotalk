@@ -1,0 +1,174 @@
+﻿@model promoTalk.Models.tbl_customOrder
+
+@{
+  
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+@*<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+<script>
+    $(document).ready(function() {
+        $('TextArea').summernote();
+    });
+</script>*@
+@using (Html.BeginForm("Requestform", "customorder", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+	<header class="entry-header">
+												
+            <div class="title_border">
+				<h2>Custom Order Form</h2>
+			</div>
+		</header>
+    <div class="container container-form">
+       
+        <input type="hidden" value='@ViewBag.catalogID' id="catalogID" name="catalogID" />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.other1, htmlAttributes: new { @class = "control-label col-md-12"  })
+            <div class="col-md-12">
+                <input type="text" value='@ViewBag.title' name="other1" class = "form-control" readonly/>  
+                <input type="hidden" value='@ViewBag.slugURL' name="other2" />
+                <input type="hidden" value='@ViewBag.category' name="category" />
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.companyName, htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.companyName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.companyName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.phone, htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.phone, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.companyURl, htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.companyURl, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.companyURl, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+       
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.comments, htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.comments, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.comments, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            
+                <label class="control-label col-md-12">Logo</label>
+                <div class="col-md-12 choose-img">
+                    @*<img id="pic" src="" alt="Image" width="80px" height="80px">*@
+                    <input type="file" id="photoA" name="file" class="choose-input">
+                </div>
+            
+        </div> 
+
+        <div class="form-group form-group11 col-md-6">
+            
+                <input type="submit" value="Submit Now" class="btn btn-default c-submit" />
+            
+        </div>
+    </div>
+}
+
+@{var res = TempData["result"];}
+<script>    
+    if ('@res'!= null)
+    {
+        if ('@res' == 's')
+        {
+            bootbox.alert({
+                title: "Success !",
+                message: "Order placed successful. Thank You.",
+                timeOut: 2000
+            })
+        }
+        if ('@res' == 'f') {
+            bootbox.alert({
+                title: "Failure !",
+                message: '<p>Record not saved .</p>',
+                timeOut: 2000
+            });
+        }
+    }
+</script>
+
+<script>
+    function readURL(input) {
+        
+        if (input.files && input.files[0]) {
+            //Get reference of FileUpload.
+            var fileUpload = document.getElementById("photoA");
+            if (fileUpload.value.length > 0) {
+                //Check whether the file is valid Image.
+                var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(.jpg|.png|.gif)$");
+                if (regex.test(fileUpload.value.toLowerCase())) {
+                    var reader = new FileReader();
+                    var s = fileUpload.files[0];
+                    reader.readAsDataURL(s);
+                    reader.onload = function (e) {
+                        var image = new Image();
+                        image.src = e.target.result;
+                        image.onload = function () {
+                            
+                            var height = this.height;
+                            var width = this.width;
+                            if (height > 200 || width > 200) {
+                                
+
+                                bootbox.alert({
+                                    title: "Alert !",
+                                    message: 'Height and Width must not exceed 200px.'
+                                });
+                                return false;
+                            }
+                           
+                        };
+                    }
+                }
+                else {
+
+                    bootbox.alert({
+                        title: "Alert !",
+                        message: 'Please select .jpg,.png,.gif'
+                    });
+                    return false;
+                }
+            }
+
+        }
+    }
+
+    $("#photoA").change(function () {
+        readURL(this);
+    });
+</script>

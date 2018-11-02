@@ -1,0 +1,133 @@
+﻿@{
+    <title>Events</title>
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<header class="entry-header">
+
+    <div class="title_border">
+        <h2>Promo Events</h2>
+    </div>
+</header>
+<div class="catelog-main-search">
+
+    <div class="container">
+        <div class="search-box">
+            <ul>
+                <li>
+                   <select id="ddlEventType">
+                       <option >All Events</option>
+                       <option value="Association">Association Event</option>
+                       <option value="decorators">Decorators Events</option> 
+                       <option value="emroidersEvent">Embroiders Event</option>
+                       <option value="industrialEvent">Industry Events</option>
+                       <option value="printerEvent">Print Event</option> 
+                   </select>
+                </li>
+                <li>
+                    @Html.DropDownList("monthdate", null, "All Months", htmlAttributes: new { @class = "postform" })
+                </li>
+                <li>
+                    <input type="hidden" name="ofsubmitted" value="1">
+                    <input type="button" value="Search" onclick="return searchResult();">
+                    <input type="button" value="Reset" onclick="return reset();">
+                </li>
+            </ul>   
+        </div>
+    </div>
+</div>
+@{var isFetureEvent = ViewBag.isFetureEvent;}
+<div class="container">
+    <div id="viewResult">
+    </div>
+	<div class="col-lg-12 text-center" style="float:left; margin:20px 0px;"> 
+        @{if (isFetureEvent)
+            {
+                <a href="@Url.Action("events_archive", "Home")" class="pastevents">View Past Events</a>
+            }
+            else
+            {
+                <a href="@Url.Action("events", "Home")" class="pastevents">View Upcoming Events</a>
+            }
+        }
+		
+	</div>
+</div>
+<style>
+    .event-box > .col-lg-3 > a {
+        width: 100%;
+        color: white;
+        text-decoration: none;
+        font-size: 20px;
+        text-decoration: none;
+    }
+
+    .event-box > .col-lg-9 > span > a {
+        color: #333;
+        font-size: 16px;
+        text-decoration: none;
+    }
+
+    .event-box > .col-lg-9 > p > a {
+        font-size: 13px !important;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .event-box > .col-lg-3 > a:hover, .event-box > col-lg-3 > a:focus {
+        text-decoration: none;
+    }
+
+    .event-box > .col-lg-9 > span > a:hover, .event-box > .col-lg-9 > span > a:focus {
+        text-decoration: none;
+    }
+
+    .event-box > .col-lg-9 > p > a:hover, .event-box > col-lg-9 > p > a:focus {
+        text-decoration: none;
+    }
+</style>
+@*@item.TillDateime.ToString("dddd, MMM dd yyyy")<br /><div style="max-height: 15px; overflow: hidden;">@Html.Raw(item.description)</div>*@
+
+
+<script>
+    $(document).ready(function () {
+        searchResult();
+    })
+</script>
+<script>
+
+        function searchResult() {
+            
+            var ddlEventType = $("#ddlEventType").find('option:selected').text();
+            var dtmonth = $("#monthdate").find("option:selected").text();
+           
+
+            $.ajax({
+                url: '/Home/_partialevents',
+                type: 'POST',
+                data: { 'dtmonth': dtmonth, 'eventType': ddlEventType, 'isFetureEvent':'@isFetureEvent' },
+                success: function (data) {
+                    
+                    $('#viewResult').html(data);
+                },
+                error: function () {
+                    bootbox.alert({
+                        title: "Alert !",
+                        message: '<p>Whooaaa! Something went wrong..</p>',
+                        timeOut: 2000
+
+                    });
+
+                }
+            });
+
+        }
+
+
+        function reset()
+        {
+            $("#ddlEventType").prop('selectedIndex', 0);
+            $("#monthdate").prop('selectedIndex', 0);
+            searchResult();
+        }
+</script>
+

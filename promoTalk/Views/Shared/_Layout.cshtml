@@ -1,0 +1,300 @@
+﻿<!DOCTYPE html>
+<html>
+<head id="Head1">
+
+    @{var pagetitle = ViewBag.pagetitle == null ? "PROMOTALKS" : ViewBag.pagetitle;}
+    <title>@pagetitle</title>
+    @{var title = ViewBag.title == null ? "PROMOTALKS" : ViewBag.title;}
+    <meta name="title" content='@title' />
+    <meta property="og:title" content='@title' />
+     @{var desc = ViewBag.desc == null ? "Search latest news, events from promo products industries and latest topic and tools from Industry expert all at one place" : ViewBag.desc;}
+    <meta name="description" content='@desc' />
+    <meta property="og:description" content='@desc' />
+
+    @{var keyword = ViewBag.keyword == null ? "PROMOTALKS" : ViewBag.keyword;}
+    <meta name="keywords" content='@keyword' />
+
+    @{var imgsrc = ViewBag.imgsrc == null ? " " : ViewBag.imgsrc;}
+    <meta property="og:image" content='@imgsrc'/>   
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:type" content="image/gif">
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+    <link href="~/Content/style.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
+    <link rel='stylesheet' id='twentytwelve-fonts-css' href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&#038;subset=latin,latin-ext' type='text/css' media='all' />
+    <link rel='stylesheet' id='twentytwelve-style-css' href='~/Content/style-1.css' type='text/css' media='all' />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/base/minified/jquery-ui.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootbox.min.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+</head>
+
+<body class="home">
+    @{ var header = ViewBag.header; }
+    @{ if (header == null)
+        {
+            <div class="headermn" id="myHeader">
+                <div class="container">
+                    <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+      <div class="logo navbar-brand"><a href="@Url.Action("Index", "Home")">Promo<strong>Talks</strong></a></div>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav pull-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Search <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li> <a target="_blank" href="http://camerareadyart.espwebsite.com">Promo Products</a></li>
+            <li><a href="@Url.Action("CatalogS","Home")">Promo Catalogs</a></li>
+            <li><a href="@Url.Action("offers","Home")">Promo Flyers</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">DESIGN <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="https://www.qeretail.com/" target="_blank">Promo Stores</a></li> @*"@Url.Action("promostore", "Home")"*@
+            @*<li><a href="@Url.Action("artwork","Home")">Promo Art & Design</a></li>*@
+            <li><a href="http://camerareadyart.com/">Promo Art & Design</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Explore <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="@Url.Action("News", "Home")">Promo News</a></li>
+            <li><a href="@Url.Action("events","Home")">Promo Events</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Learn <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="@Url.Action("Marketing", "Home")">Promo Marketing</a></li>
+            <li><a href="@Url.Action("Technology", "Home")">Promo Technology</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Find <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="@Url.Action("promo_screen_printers","Home")">Screen Printers</a></li>
+                            <li><a href="@Url.Action("promo_embroiders","Home")">Embroiders</a></li>
+          </ul>
+        </li>
+      </ul>
+
+    </div>
+    <!--/.nav-collapse -->
+  </div>
+  <!--/.container-fluid -->
+</nav>
+                </div>
+            </div>
+        }
+    }
+   @{ if (header == null)
+       {
+        <div class="content_main">
+            @RenderBody()          
+            </div> 
+       }
+       else
+       {
+        <div class="content_main home">
+            @RenderBody() 
+        </div>
+       }
+}
+    <div class="container-fluid newsletter-main">
+		<div class="container">
+			@Html.Action("partial_subscription", "Home")
+		</div>
+	</div>
+    <div class="footermn">
+        <div class="container">
+
+            <div class="footer_lt">
+
+                <ul class="f-desk">
+                    <li><a href="@Url.Action("CatalogS","Home")">Promo Catalog</a></li>
+                    <li><a href="@Url.Action("offers","Home")">Promo Flyers</a></li>
+                    </ul>
+					<ul class="f-desk">
+                    <li><a href="https://www.qeretail.com/">Promo Stores</a></li>
+                    
+                    <li><a href="https://www.camerareadyart.com/">Promo Art & Design</a></li>
+                    @*@Url.Action("artwork", "Home")*@
+</ul>
+<ul class="f-desk">
+                    <li><a href="@Url.Action("News", "Home")">Promo News</a></li>
+                    
+
+
+                    <li><a href="@Url.Action("events","Home")">Promo Event</a></li>
+					</ul>
+                    <ul class="f-desk">
+                    <li><a href="@Url.Action("Marketing", "Home")">Promo Marketing</a></li>
+                    
+                    <li><a href="@Url.Action("Technology", "Home")">Promo Technology</a></li>
+                    </ul>
+					<ul class="f-desk">
+                    <li><a href="@Url.Action("promo_screen_printers","Home")">Screen Printers</a></li>
+                    
+                    <li><a href="@Url.Action("promo_embroiders","Home")">Embroiders</a></li>
+                </ul>
+            </div>
+
+
+
+
+            <div class="copyright">
+                <span style="float:left;">Copyright © 2018 PromoTalks. All rights reserved</span>
+                <div class="icons fright">
+
+                    <a href="#" target="_blank">
+                        <img src="https://www.camerareadyart.com//images/facebook.png" alt="facebook" />
+                    </a> <a href="#" target="_blank">
+                        <img src="https://www.camerareadyart.com//images/twitter.png" alt="twitter" />
+                    </a> <a href="#" target="_new">
+                        <img src="https://www.camerareadyart.com//images/linkedin.png" alt="linkedin" />
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+   
+
+    <style>
+        .select {
+            height: 100px;
+            overflow: scroll;
+        }
+    </style>
+    <div class="modal fade" tabindex="-1" id="div_captcha"
+         data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        ×
+                    </button>
+                    <h4 class="modal-title">Are you a robot ? </h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        This is just to check if you are a robot. Please add the captcha text into text field.
+                    </p>
+                    <div style="background-color: rgba(233, 226, 226, 0.89);
+                text-decoration: line-through;
+                font-size: 35px;
+                letter-spacing: 24px;" id="captcha"></div>
+                    <div class="blue-bg1">
+                        <input type="text" id="inputText" />
+                        <button onclick="generateCaptcha()">Refresh</button>
+                        <button onclick="check()">Submit</button>.
+                        <input type="hidden" id="pdfurl" /><input type="hidden" id="pdfname" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+var captcha;
+
+function generateCaptcha() {
+    var alpha = new Array('1','2','3','4','5','6','7','8','9','A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
+    var i;
+    for (i = 0; i < 6; i++) {
+        var a = alpha[Math.floor(Math.random() * alpha.length)];
+        var b = alpha[Math.floor(Math.random() * alpha.length)];
+        var c = alpha[Math.floor(Math.random() * alpha.length)];
+        var d = alpha[Math.floor(Math.random() * alpha.length)];
+        var e = alpha[Math.floor(Math.random() * alpha.length)];
+        var f = alpha[Math.floor(Math.random() * alpha.length)];
+
+    }
+    var code = a + '' + b + ''+ c + '' + d + '' + e + '' + f ;
+
+
+    document.getElementById("captcha").innerHTML = code;
+}
+
+function check() {
+    
+    var input=document.getElementById("inputText").value;
+    var captcha = document.getElementById("captcha").innerHTML
+    if (input == captcha) {
+        $('#div_captcha').modal("hide")
+        download_file()
+
+    }
+    else {
+        generateCaptcha();
+        alert("Wrong captcha code. Please try again.");
+    }
+}
+    </script>
+
+    <script>
+    function download_file() {
+        // for non-IE
+        var fileURL = $('#pdfurl').val()
+        var fileName = $('#pdfname').val()
+        if (!window.ActiveXObject) {
+            var save = document.createElement('a');
+            save.href = fileURL;
+            save.target = '_blank';
+            var filename = fileURL.substring(fileURL.lastIndexOf('/') + 1);
+            save.download = fileName || filename;
+            if (navigator.userAgent.toLowerCase().match(/(ipad|iphone|safari)/) && navigator.userAgent.search("Chrome") < 0) {
+                document.location = save.href;
+                // window event not working here
+            } else {
+                var evt = new MouseEvent('click', {
+                    'view': window,
+                    'bubbles': true,
+                    'cancelable': false
+                });
+                save.dispatchEvent(evt);
+                (window.URL || window.webkitURL).revokeObjectURL(save.href);
+            }
+        }
+
+            // for IE < 11
+        else if (!!window.ActiveXObject && document.execCommand) {
+            var _window = window.open(fileURL, '_blank');
+            _window.document.close();
+            _window.document.execCommand('SaveAs', true, fileName || fileURL)
+            _window.close();
+        }
+    }
+    </script>
+    <script>
+
+    function openModel(pdfURL, pdfName)
+    {
+        $('#pdfurl').val(pdfURL)
+        $('#pdfname').val(pdfName)
+        pdfName = pdfName
+        generateCaptcha();
+        $("#div_captcha").modal('show');
+    }
+    </script>
+</body>
+
+</html>

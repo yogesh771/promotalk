@@ -1,0 +1,87 @@
+﻿
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p class="create-btn">
+    @Html.ActionLink("Create New", "Create", "", new { @class = "create-new" })
+</p>
+<div class="col-md-9 box-2 running-campaigns sidebar-right">
+    <div class="col-md-12">
+        <h4>List Of States</h4>
+        <hr>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            @Html.DropDownList("countryID", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="col-md-1">
+        <div class="form-group">
+            <input type="button" class="btn btn-defaul" value="Search" onclick="return searchResult();" />
+        </div>
+    </div>
+    <div class="table-responsive col-lg-12" id="viewResult">
+        <div class="col-lg-12 white-box">
+            <p>Please use above search criteria to view the result list</p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    function searchResult() {
+        debugger
+        var countryID = $("#countryID").val();
+
+        if (countryID == "") {
+
+            bootbox.alert({
+                title: "Alert !",
+                message: '<p>Please select country </p>',
+                timeOut: 2000
+
+            });
+            return;
+        }
+        debugger
+       
+        $.ajax({
+            url: '/states/_partialStateLIst',
+            type: 'GET',
+            data: { 'countryID': countryID },
+            success: function (data) {
+                debugger
+                $('#viewResult').html(data);                
+            },
+            error: function () {
+                bootbox.alert({
+                    title: "Alert !",
+                    message: '<p>Whooaaa! Something went wrong..</p>',
+                    timeOut: 2000
+
+                });
+
+            }
+        });
+    }
+</script>
+<script>
+
+    $(document).ready(function () {
+        debugger
+        if ('@TempData["Result"]' != '') {
+            if ('@TempData["Result"]' == "Success")
+
+                bootbox.alert({
+                    title: "Confirmation !",
+                    message: '<p>District created successfully</p>',
+                    timeOut: 2000
+                });
+
+        }
+    });
+</script>

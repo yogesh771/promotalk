@@ -1,0 +1,1243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="promotalkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AppErrorLog">
+          <Key>
+            <PropertyRef Name="ErrorID" />
+          </Key>
+          <Property Name="ErrorID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ErrorMsg" Type="varchar(max)" />
+          <Property Name="datelog" Type="datetime" />
+          <Property Name="innerException" Type="varchar(max)" />
+          <Property Name="stackTrace" Type="varchar(max)" />
+          <Property Name="userID" Type="bigint" />
+        </EntityType>
+        <EntityType Name="buisinessInformation">
+          <Key>
+            <PropertyRef Name="buisinessID" />
+          </Key>
+          <Property Name="buisinessID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="bname" Type="varchar" MaxLength="500" />
+          <Property Name="description" Type="varchar(max)" />
+          <Property Name="website" Type="varchar" MaxLength="500" />
+          <Property Name="ContactPerson" Type="varchar" MaxLength="500" />
+          <Property Name="phone" Type="varchar" MaxLength="50" />
+          <Property Name="email" Type="varchar" MaxLength="500" />
+          <Property Name="isScreenPrinter" Type="bit" Nullable="false" />
+          <Property Name="isEmbroiders" Type="bit" Nullable="false" />
+          <Property Name="createdDate" Type="datetime" Nullable="false" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
+          <Property Name="logo" Type="varchar" MaxLength="500" />
+          <Property Name="location" Type="nvarchar" MaxLength="500" />
+          <Property Name="zipCode" Type="varchar" MaxLength="10" />
+          <Property Name="isPremeum" Type="bit" Nullable="false" />
+          <Property Name="seo_metaKeyword" Type="nvarchar(max)" />
+          <Property Name="seo_OGImage" Type="varchar" MaxLength="1000" />
+          <Property Name="seo_OGDesription" Type="nvarchar(max)" />
+          <Property Name="seo_OGTitle" Type="nvarchar(max)" />
+          <Property Name="City" Type="nvarchar" MaxLength="200" />
+          <Property Name="StateID" Type="int" Nullable="false" />
+          <Property Name="countryID" Type="int" Nullable="false" />
+          <Property Name="slugURL" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="buisinessServices">
+          <Key>
+            <PropertyRef Name="buisinessServicesID" />
+          </Key>
+          <Property Name="buisinessServicesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="buisinessID" Type="int" Nullable="false" />
+          <Property Name="serviceID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="catalogCatagory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="catalogID" Type="bigint" Nullable="false" />
+          <Property Name="productCategoryID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="catalogID" />
+          </Key>
+          <Property Name="catalogID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="category" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="country">
+          <Key>
+            <PropertyRef Name="countryID" />
+          </Key>
+          <Property Name="countryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="countryName" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="marketing">
+          <Key>
+            <PropertyRef Name="marketingID" />
+          </Key>
+          <Property Name="marketingID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar(max)" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="seo_metaKeyword" Type="nvarchar(max)" />
+          <Property Name="seo_OGImage" Type="varchar" MaxLength="1000" />
+          <Property Name="createdDate" Type="datetime" />
+          <Property Name="seo_OGDesription" Type="nvarchar(max)" />
+          <Property Name="seo_OGTitle" Type="nvarchar(max)" />
+          <Property Name="shortDescription" Type="nvarchar(max)" />
+          <Property Name="slugURL" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="news">
+          <Key>
+            <PropertyRef Name="newsID" />
+          </Key>
+          <Property Name="newsID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar(max)" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="seo_metaKeyword" Type="nvarchar(max)" />
+          <Property Name="seo_OGImage" Type="varchar" MaxLength="1000" />
+          <Property Name="createdDate" Type="datetime" />
+          <Property Name="seo_OGDesription" Type="nvarchar(max)" />
+          <Property Name="seo_OGTitle" Type="nvarchar(max)" />
+          <Property Name="updateON" Type="datetime" Nullable="false" />
+          <Property Name="shortDescription" Type="nvarchar(max)" />
+          <Property Name="slugURL" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="productCatalog">
+          <Key>
+            <PropertyRef Name="catalogID" />
+          </Key>
+          <Property Name="catalogID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="supplierID" Type="int" Nullable="false" />
+          <Property Name="thumbImageURL" Type="nvarchar(max)" />
+          <Property Name="productTitle" Type="nvarchar(max)" />
+          <Property Name="isPremeum" Type="bit" Nullable="false" />
+          <Property Name="createdDate" Type="datetime" />
+          <Property Name="isOffer" Type="bit" Nullable="false" />
+          <Property Name="pdfURL" Type="nvarchar(max)" />
+          <Property Name="seo_metaKeyword" Type="nvarchar(max)" />
+          <Property Name="seo_OGImage" Type="varchar" MaxLength="1000" />
+          <Property Name="seo_OGDesription" Type="nvarchar(max)" />
+          <Property Name="seo_OGTitle" Type="nvarchar(max)" />
+          <Property Name="offerProviderURl" Type="varchar(max)" />
+          <Property Name="isDeleted" Type="bit" Nullable="false" />
+          <Property Name="offerExpireDate" Type="datetime" />
+          <Property Name="slugURL" Type="nvarchar(max)" />
+          <Property Name="pdfName" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="productCategory">
+          <Key>
+            <PropertyRef Name="productCategoryID" />
+          </Key>
+          <Property Name="productCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="productCategory" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="SupplierFor" Type="int" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sendGridDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="projectname" Type="nvarchar" MaxLength="50" />
+          <Property Name="APIKEY" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="services">
+          <Key>
+            <PropertyRef Name="serviceID" />
+          </Key>
+          <Property Name="serviceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="createdDate" Type="datetime" Nullable="false" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="state">
+          <Key>
+            <PropertyRef Name="StateID" />
+          </Key>
+          <Property Name="StateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateName" Type="varchar" MaxLength="100" />
+          <Property Name="countryID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubscriberInfo">
+          <Key>
+            <PropertyRef Name="subscriberID" />
+          </Key>
+          <Property Name="subscriberID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="supplier">
+          <Key>
+            <PropertyRef Name="supplierID" />
+          </Key>
+          <Property Name="supplierID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="supplierName" Type="nvarchar" MaxLength="250" />
+          <Property Name="City" Type="nvarchar" MaxLength="200" />
+          <Property Name="StateID" Type="int" />
+          <Property Name="address" Type="nvarchar" MaxLength="500" />
+          <Property Name="phone" Type="varchar" MaxLength="50" />
+          <Property Name="SupplierFor" Type="int" />
+          <Property Name="isActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tbl_customOrder">
+          <Key>
+            <PropertyRef Name="orderID" />
+          </Key>
+          <Property Name="orderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="500" />
+          <Property Name="companyName" Type="nvarchar" MaxLength="500" />
+          <Property Name="comments" Type="nvarchar(max)" />
+          <Property Name="email" Type="nvarchar" MaxLength="500" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
+          <Property Name="other1" Type="nvarchar" MaxLength="500" />
+          <Property Name="other2" Type="nvarchar" MaxLength="500" />
+          <Property Name="createdDate" Type="datetime" Nullable="false" />
+          <Property Name="catalogID" Type="int" />
+          <Property Name="phone" Type="varchar" MaxLength="50" />
+          <Property Name="companyURl" Type="nvarchar" MaxLength="500" />
+          <Property Name="logo" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="tbl_events">
+          <Key>
+            <PropertyRef Name="eventID" />
+          </Key>
+          <Property Name="eventID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="500" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="venue" Type="nvarchar(max)" />
+          <Property Name="dateTime" Type="datetime" Nullable="false" />
+          <Property Name="createdDate" Type="datetime" Nullable="false" />
+          <Property Name="TillDateime" Type="datetime" Nullable="false" />
+          <Property Name="Hoster" Type="nvarchar" MaxLength="500" />
+          <Property Name="industrialEvent" Type="bit" Nullable="false" />
+          <Property Name="associationEvent" Type="bit" Nullable="false" />
+          <Property Name="printerEvent" Type="bit" Nullable="false" />
+          <Property Name="emroidersEvent" Type="bit" Nullable="false" />
+          <Property Name="sourceUrl" Type="nvarchar(max)" />
+          <Property Name="decorators" Type="bit" Nullable="false" />
+          <Property Name="featuredImag" Type="nvarchar(max)" />
+          <Property Name="Location" Type="nvarchar(max)" />
+          <Property Name="seo_metaKeyword" Type="nvarchar(max)" />
+          <Property Name="seo_OGDesription" Type="nvarchar(max)" />
+          <Property Name="seo_OGTitle" Type="nvarchar(max)" />
+          <Property Name="EventWebsite" Type="nvarchar(max)" />
+          <Property Name="slugURL" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="technology">
+          <Key>
+            <PropertyRef Name="technologyID" />
+          </Key>
+          <Property Name="technologyID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar(max)" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="seo_metaKeyword" Type="nvarchar(max)" />
+          <Property Name="seo_OGImage" Type="varchar" MaxLength="1000" />
+          <Property Name="seo_OGDesription" Type="nvarchar(max)" />
+          <Property Name="seo_OGTitle" Type="nvarchar(max)" />
+          <Property Name="createdDate" Type="datetime" />
+          <Property Name="shortDescription" Type="nvarchar(max)" />
+          <Property Name="slugURL" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'promotalks_beta.dbo.tempTable' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="tempTable">
+          <Property Name="label" Type="nvarchar" MaxLength="200" />
+          <Property Name="title" Type="nvarchar" MaxLength="500" />
+          <Property Name="pagename" Type="nvarchar" MaxLength="200" />
+          <Property Name="id" Type="int" />
+          <Property Name="url" Type="nvarchar" MaxLength="200" />
+        </EntityType>-->
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" />
+          <Property Name="pwd" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_buisinessInformation_country">
+          <End Role="country" Type="Self.country" Multiplicity="1" />
+          <End Role="buisinessInformation" Type="Self.buisinessInformation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="country">
+              <PropertyRef Name="countryID" />
+            </Principal>
+            <Dependent Role="buisinessInformation">
+              <PropertyRef Name="countryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_buisinessInformation_state">
+          <End Role="state" Type="Self.state" Multiplicity="1" />
+          <End Role="buisinessInformation" Type="Self.buisinessInformation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="buisinessInformation">
+              <PropertyRef Name="StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_buisinessServices_services">
+          <End Role="services" Type="Self.services" Multiplicity="1" />
+          <End Role="buisinessServices" Type="Self.buisinessServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="services">
+              <PropertyRef Name="serviceID" />
+            </Principal>
+            <Dependent Role="buisinessServices">
+              <PropertyRef Name="serviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_catalogCatagory_productCatalog">
+          <End Role="productCatalog" Type="Self.productCatalog" Multiplicity="1" />
+          <End Role="catalogCatagory" Type="Self.catalogCatagory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productCatalog">
+              <PropertyRef Name="catalogID" />
+            </Principal>
+            <Dependent Role="catalogCatagory">
+              <PropertyRef Name="catalogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_catalogCatagory_productCategory">
+          <End Role="productCategory" Type="Self.productCategory" Multiplicity="1" />
+          <End Role="catalogCatagory" Type="Self.catalogCatagory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productCategory">
+              <PropertyRef Name="productCategoryID" />
+            </Principal>
+            <Dependent Role="catalogCatagory">
+              <PropertyRef Name="productCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_productCatalog_supplier">
+          <End Role="supplier" Type="Self.supplier" Multiplicity="1" />
+          <End Role="productCatalog" Type="Self.productCatalog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="supplier">
+              <PropertyRef Name="supplierID" />
+            </Principal>
+            <Dependent Role="productCatalog">
+              <PropertyRef Name="supplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_state_country">
+          <End Role="country" Type="Self.country" Multiplicity="1" />
+          <End Role="state" Type="Self.state" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="country">
+              <PropertyRef Name="countryID" />
+            </Principal>
+            <Dependent Role="state">
+              <PropertyRef Name="countryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_supplier_state">
+          <End Role="state" Type="Self.state" Multiplicity="0..1" />
+          <End Role="supplier" Type="Self.supplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="supplier">
+              <PropertyRef Name="StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="getmonthyear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="isFetureEvent" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="getProductCatalog_sp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="productCategoryID" Type="int" Mode="In" />
+          <Parameter Name="supplierID" Type="int" Mode="In" />
+          <Parameter Name="isOffer" Type="int" Mode="In" />
+          <Parameter Name="isPremium" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getSupplier_sp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="RemoveImage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="Modulename" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="RemoveSpecialChar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+          <Parameter Name="str" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="search_result" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="searchtext" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="promotalkModelStoreContainer">
+          <EntitySet Name="AppErrorLog" EntityType="Self.AppErrorLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="buisinessInformation" EntityType="Self.buisinessInformation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="buisinessServices" EntityType="Self.buisinessServices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="catalogCatagory" EntityType="Self.catalogCatagory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="country" EntityType="Self.country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="marketing" EntityType="Self.marketing" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="news" EntityType="Self.news" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="productCatalog" EntityType="Self.productCatalog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="productCategory" EntityType="Self.productCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sendGridDetails" EntityType="Self.sendGridDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="services" EntityType="Self.services" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="state" EntityType="Self.state" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubscriberInfo" EntityType="Self.SubscriberInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="supplier" EntityType="Self.supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_customOrder" EntityType="Self.tbl_customOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_events" EntityType="Self.tbl_events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="technology" EntityType="Self.technology" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_buisinessInformation_country" Association="Self.FK_buisinessInformation_country">
+            <End Role="country" EntitySet="country" />
+            <End Role="buisinessInformation" EntitySet="buisinessInformation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_buisinessInformation_state" Association="Self.FK_buisinessInformation_state">
+            <End Role="state" EntitySet="state" />
+            <End Role="buisinessInformation" EntitySet="buisinessInformation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_buisinessServices_services" Association="Self.FK_buisinessServices_services">
+            <End Role="services" EntitySet="services" />
+            <End Role="buisinessServices" EntitySet="buisinessServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_catalogCatagory_productCatalog" Association="Self.FK_catalogCatagory_productCatalog">
+            <End Role="productCatalog" EntitySet="productCatalog" />
+            <End Role="catalogCatagory" EntitySet="catalogCatagory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_catalogCatagory_productCategory" Association="Self.FK_catalogCatagory_productCategory">
+            <End Role="productCategory" EntitySet="productCategory" />
+            <End Role="catalogCatagory" EntitySet="catalogCatagory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productCatalog_supplier" Association="Self.FK_productCatalog_supplier">
+            <End Role="supplier" EntitySet="supplier" />
+            <End Role="productCatalog" EntitySet="productCatalog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_state_country" Association="Self.FK_state_country">
+            <End Role="country" EntitySet="country" />
+            <End Role="state" EntitySet="state" />
+          </AssociationSet>
+          <AssociationSet Name="FK_supplier_state" Association="Self.FK_supplier_state">
+            <End Role="state" EntitySet="state" />
+            <End Role="supplier" EntitySet="supplier" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="promotalkModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="promotalkEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="getSupplier_sp" ReturnType="Collection(promotalkModel.getSupplier_sp_Result)" />
+          <FunctionImport Name="RemoveImage">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="Modulename" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getmonthyear" ReturnType="Collection(String)" >
+            <Parameter Name="isFetureEvent" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="search_result" ReturnType="Collection(promotalkModel.search_result_Result)">
+          <Parameter Name="searchtext" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getProductCatalog_sp" ReturnType="Collection(promotalkModel.getProductCatalog_sp_Result)">
+            <Parameter Name="productCategoryID" Mode="In" Type="Int32" />
+            <Parameter Name="supplierID" Mode="In" Type="Int32" />
+            <Parameter Name="isOffer" Mode="In" Type="Int32" />
+            <Parameter Name="isPremium" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="AppErrorLogs" EntityType="promotalkModel.AppErrorLog" />
+          <EntitySet Name="buisinessInformations" EntityType="promotalkModel.buisinessInformation" />
+          <EntitySet Name="buisinessServices" EntityType="promotalkModel.buisinessService" />
+          <EntitySet Name="catalogCatagories" EntityType="promotalkModel.catalogCatagory" />
+          <EntitySet Name="categories" EntityType="promotalkModel.category" />
+          <EntitySet Name="countries" EntityType="promotalkModel.country" />
+          <EntitySet Name="marketings" EntityType="promotalkModel.marketing" />
+          <EntitySet Name="news" EntityType="promotalkModel.news" />
+          <EntitySet Name="productCatalogs" EntityType="promotalkModel.productCatalog" />
+          <EntitySet Name="productCategories" EntityType="promotalkModel.productCategory" />
+          <EntitySet Name="sendGridDetails" EntityType="promotalkModel.sendGridDetail" />
+          <EntitySet Name="services" EntityType="promotalkModel.service" />
+          <EntitySet Name="states" EntityType="promotalkModel.state" />
+          <EntitySet Name="SubscriberInfoes" EntityType="promotalkModel.SubscriberInfo" />
+          <EntitySet Name="suppliers" EntityType="promotalkModel.supplier" />
+          <EntitySet Name="tbl_customOrder" EntityType="promotalkModel.tbl_customOrder" />
+          <EntitySet Name="tbl_events" EntityType="promotalkModel.tbl_events" />
+          <EntitySet Name="technologies" EntityType="promotalkModel.technology" />
+          <EntitySet Name="users" EntityType="promotalkModel.user" />
+          <AssociationSet Name="FK_buisinessInformation_country" Association="promotalkModel.FK_buisinessInformation_country">
+            <End Role="country" EntitySet="countries" />
+            <End Role="buisinessInformation" EntitySet="buisinessInformations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_buisinessInformation_state" Association="promotalkModel.FK_buisinessInformation_state">
+            <End Role="state" EntitySet="states" />
+            <End Role="buisinessInformation" EntitySet="buisinessInformations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_buisinessServices_services" Association="promotalkModel.FK_buisinessServices_services">
+            <End Role="service" EntitySet="services" />
+            <End Role="buisinessService" EntitySet="buisinessServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_catalogCatagory_productCatalog" Association="promotalkModel.FK_catalogCatagory_productCatalog">
+            <End Role="productCatalog" EntitySet="productCatalogs" />
+            <End Role="catalogCatagory" EntitySet="catalogCatagories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_catalogCatagory_productCategory" Association="promotalkModel.FK_catalogCatagory_productCategory">
+            <End Role="productCategory" EntitySet="productCategories" />
+            <End Role="catalogCatagory" EntitySet="catalogCatagories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_state_country" Association="promotalkModel.FK_state_country">
+            <End Role="country" EntitySet="countries" />
+            <End Role="state" EntitySet="states" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productCatalog_supplier" Association="promotalkModel.FK_productCatalog_supplier">
+            <End Role="supplier" EntitySet="suppliers" />
+            <End Role="productCatalog" EntitySet="productCatalogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_supplier_state" Association="promotalkModel.FK_supplier_state">
+            <End Role="state" EntitySet="states" />
+            <End Role="supplier" EntitySet="suppliers" />
+          </AssociationSet>
+          </EntityContainer>
+        <ComplexType Name="getSupplier_sp_Result">
+          <Property Type="Int32" Name="supplierID" Nullable="false" />
+          <Property Type="String" Name="supplierName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="StateID" Nullable="false" />
+          <Property Type="String" Name="address" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="phone" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="StateName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="countryName" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="search_result_Result">
+          <Property Type="String" Name="title" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="pagename" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="id" Nullable="true" />
+          <Property Type="String" Name="url" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="label" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="getProductCatalog_sp_Result">
+          <Property Type="Int64" Name="catalogID" Nullable="false" />
+          <Property Type="Int32" Name="supplierID" Nullable="false" />
+          <Property Type="String" Name="thumbImageURL" Nullable="true" />
+          <Property Type="String" Name="productTitle" Nullable="true" />
+          <Property Type="Boolean" Name="isPremeum" Nullable="false" />
+          <Property Type="DateTime" Name="createdDate" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="isOffer" Nullable="false" />
+          <Property Type="String" Name="pdfURL" Nullable="true" />
+          <Property Type="String" Name="seo_metaKeyword" Nullable="true" />
+          <Property Type="String" Name="seo_OGImage" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="seo_OGDesription" Nullable="true" />
+          <Property Type="String" Name="seo_OGTitle" Nullable="true" />
+          <Property Type="String" Name="offerProviderURl" Nullable="true" />
+          <Property Type="Boolean" Name="isDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="offerExpireDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="slugURL" Nullable="true" />
+          <Property Type="String" Name="supplierName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="productCategory" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <EntityType Name="AppErrorLog">
+          <Key>
+            <PropertyRef Name="ErrorID" />
+          </Key>
+          <Property Name="ErrorID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ErrorMsg" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="datelog" Type="DateTime" Precision="3" />
+          <Property Name="innerException" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="stackTrace" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="userID" Type="Int64" />
+        </EntityType>
+        <EntityType Name="buisinessInformation">
+          <Key>
+            <PropertyRef Name="buisinessID" />
+          </Key>
+          <Property Name="buisinessID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="bname" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="website" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ContactPerson" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="isScreenPrinter" Type="Boolean" Nullable="false" />
+          <Property Name="isEmbroiders" Type="Boolean" Nullable="false" />
+          <Property Name="createdDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
+          <Property Name="logo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="location" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="zipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="isPremeum" Type="Boolean" Nullable="false" />
+          <Property Name="seo_metaKeyword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="seo_OGImage" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="seo_OGDesription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="seo_OGTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StateID" Type="Int32" Nullable="false" />
+          <Property Name="countryID" Type="Int32" Nullable="false" />
+          <Property Name="slugURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="country" Relationship="promotalkModel.FK_buisinessInformation_country" FromRole="buisinessInformation" ToRole="country" />
+          <NavigationProperty Name="state" Relationship="promotalkModel.FK_buisinessInformation_state" FromRole="buisinessInformation" ToRole="state" />
+        </EntityType>
+        <EntityType Name="buisinessService">
+          <Key>
+            <PropertyRef Name="buisinessServicesID" />
+          </Key>
+          <Property Name="buisinessServicesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="buisinessID" Type="Int32" Nullable="false" />
+          <Property Name="serviceID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="service" Relationship="promotalkModel.FK_buisinessServices_services" FromRole="buisinessService" ToRole="service" />
+        </EntityType>
+        <EntityType Name="catalogCatagory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="catalogID" Type="Int64" Nullable="false" />
+          <Property Name="productCategoryID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="productCatalog" Relationship="promotalkModel.FK_catalogCatagory_productCatalog" FromRole="catalogCatagory" ToRole="productCatalog" />
+          <NavigationProperty Name="productCategory" Relationship="promotalkModel.FK_catalogCatagory_productCategory" FromRole="catalogCatagory" ToRole="productCategory" />
+        </EntityType>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="catalogID" />
+          </Key>
+          <Property Name="catalogID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="category1" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="country">
+          <Key>
+            <PropertyRef Name="countryID" />
+          </Key>
+          <Property Name="countryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="countryName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="buisinessInformations" Relationship="promotalkModel.FK_buisinessInformation_country" FromRole="country" ToRole="buisinessInformation" />
+          <NavigationProperty Name="states" Relationship="promotalkModel.FK_state_country" FromRole="country" ToRole="state" />
+        </EntityType>
+        <EntityType Name="marketing">
+          <Key>
+            <PropertyRef Name="marketingID" />
+          </Key>
+          <Property Name="marketingID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="seo_metaKeyword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="seo_OGImage" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="createdDate" Type="DateTime" Precision="3" />
+          <Property Name="seo_OGDesription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="seo_OGTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="shortDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="slugURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="news">
+          <Key>
+            <PropertyRef Name="newsID" />
+          </Key>
+          <Property Name="newsID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="seo_metaKeyword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="seo_OGImage" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="createdDate" Type="DateTime" Precision="3" />
+          <Property Name="seo_OGDesription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="seo_OGTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="updateON" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="shortDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="slugURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="productCatalog">
+          <Key>
+            <PropertyRef Name="catalogID" />
+          </Key>
+          <Property Name="catalogID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="supplierID" Type="Int32" Nullable="false" />
+          <Property Name="thumbImageURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="productTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="isPremeum" Type="Boolean" Nullable="false" />
+          <Property Name="createdDate" Type="DateTime" Precision="3" />
+          <Property Name="isOffer" Type="Boolean" Nullable="false" />
+          <Property Name="pdfURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="seo_metaKeyword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="seo_OGImage" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="seo_OGDesription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="seo_OGTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="offerProviderURl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="isDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="offerExpireDate" Type="DateTime" Precision="3" />
+          <Property Name="slugURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="pdfName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="catalogCatagories" Relationship="promotalkModel.FK_catalogCatagory_productCatalog" FromRole="productCatalog" ToRole="catalogCatagory" />
+          <NavigationProperty Name="supplier" Relationship="promotalkModel.FK_productCatalog_supplier" FromRole="productCatalog" ToRole="supplier" />
+        </EntityType>
+        <EntityType Name="productCategory">
+          <Key>
+            <PropertyRef Name="productCategoryID" />
+          </Key>
+          <Property Name="productCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="productCategory1" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="SupplierFor" Type="Int32" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="catalogCatagories" Relationship="promotalkModel.FK_catalogCatagory_productCategory" FromRole="productCategory" ToRole="catalogCatagory" />
+        </EntityType>
+        <EntityType Name="sendGridDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="projectname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="APIKEY" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="service">
+          <Key>
+            <PropertyRef Name="serviceID" />
+          </Key>
+          <Property Name="serviceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="createdDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="buisinessServices" Relationship="promotalkModel.FK_buisinessServices_services" FromRole="service" ToRole="buisinessService" />
+        </EntityType>
+        <EntityType Name="state">
+          <Key>
+            <PropertyRef Name="StateID" />
+          </Key>
+          <Property Name="StateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="countryID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="buisinessInformations" Relationship="promotalkModel.FK_buisinessInformation_state" FromRole="state" ToRole="buisinessInformation" />
+          <NavigationProperty Name="country" Relationship="promotalkModel.FK_state_country" FromRole="state" ToRole="country" />
+          <NavigationProperty Name="suppliers" Relationship="promotalkModel.FK_supplier_state" FromRole="state" ToRole="supplier" />
+        </EntityType>
+        <EntityType Name="SubscriberInfo">
+          <Key>
+            <PropertyRef Name="subscriberID" />
+          </Key>
+          <Property Name="subscriberID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="supplier">
+          <Key>
+            <PropertyRef Name="supplierID" />
+          </Key>
+          <Property Name="supplierID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="supplierName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StateID" Type="Int32" />
+          <Property Name="address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SupplierFor" Type="Int32" />
+          <Property Name="isActive" Type="Boolean" />
+          <NavigationProperty Name="productCatalogs" Relationship="promotalkModel.FK_productCatalog_supplier" FromRole="supplier" ToRole="productCatalog" />
+          <NavigationProperty Name="state" Relationship="promotalkModel.FK_supplier_state" FromRole="supplier" ToRole="state" />
+        </EntityType>
+        <EntityType Name="tbl_customOrder">
+          <Key>
+            <PropertyRef Name="orderID" />
+          </Key>
+          <Property Name="orderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="companyName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
+          <Property Name="other1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="other2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="createdDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="catalogID" Type="Int32" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="companyURl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="logo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_events">
+          <Key>
+            <PropertyRef Name="eventID" />
+          </Key>
+          <Property Name="eventID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="venue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="dateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="createdDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TillDateime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Hoster" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="industrialEvent" Type="Boolean" Nullable="false" />
+          <Property Name="associationEvent" Type="Boolean" Nullable="false" />
+          <Property Name="printerEvent" Type="Boolean" Nullable="false" />
+          <Property Name="emroidersEvent" Type="Boolean" Nullable="false" />
+          <Property Name="sourceUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="decorators" Type="Boolean" Nullable="false" />
+          <Property Name="featuredImag" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Location" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="seo_metaKeyword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="seo_OGDesription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="seo_OGTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EventWebsite" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="slugURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="technology">
+          <Key>
+            <PropertyRef Name="technologyID" />
+          </Key>
+          <Property Name="technologyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="seo_metaKeyword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="seo_OGImage" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="seo_OGDesription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="seo_OGTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="createdDate" Type="DateTime" Precision="3" />
+          <Property Name="shortDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="slugURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pwd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_buisinessInformation_country">
+          <End Type="promotalkModel.country" Role="country" Multiplicity="1" />
+          <End Type="promotalkModel.buisinessInformation" Role="buisinessInformation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="country">
+              <PropertyRef Name="countryID" />
+            </Principal>
+            <Dependent Role="buisinessInformation">
+              <PropertyRef Name="countryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_buisinessInformation_state">
+          <End Type="promotalkModel.state" Role="state" Multiplicity="1" />
+          <End Type="promotalkModel.buisinessInformation" Role="buisinessInformation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="buisinessInformation">
+              <PropertyRef Name="StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_buisinessServices_services">
+          <End Type="promotalkModel.service" Role="service" Multiplicity="1" />
+          <End Type="promotalkModel.buisinessService" Role="buisinessService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="service">
+              <PropertyRef Name="serviceID" />
+            </Principal>
+            <Dependent Role="buisinessService">
+              <PropertyRef Name="serviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_catalogCatagory_productCatalog">
+          <End Type="promotalkModel.productCatalog" Role="productCatalog" Multiplicity="1" />
+          <End Type="promotalkModel.catalogCatagory" Role="catalogCatagory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productCatalog">
+              <PropertyRef Name="catalogID" />
+            </Principal>
+            <Dependent Role="catalogCatagory">
+              <PropertyRef Name="catalogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_catalogCatagory_productCategory">
+          <End Type="promotalkModel.productCategory" Role="productCategory" Multiplicity="1" />
+          <End Type="promotalkModel.catalogCatagory" Role="catalogCatagory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productCategory">
+              <PropertyRef Name="productCategoryID" />
+            </Principal>
+            <Dependent Role="catalogCatagory">
+              <PropertyRef Name="productCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_state_country">
+          <End Type="promotalkModel.country" Role="country" Multiplicity="1" />
+          <End Type="promotalkModel.state" Role="state" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="country">
+              <PropertyRef Name="countryID" />
+            </Principal>
+            <Dependent Role="state">
+              <PropertyRef Name="countryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_productCatalog_supplier">
+          <End Type="promotalkModel.supplier" Role="supplier" Multiplicity="1" />
+          <End Type="promotalkModel.productCatalog" Role="productCatalog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="supplier">
+              <PropertyRef Name="supplierID" />
+            </Principal>
+            <Dependent Role="productCatalog">
+              <PropertyRef Name="supplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_supplier_state">
+          <End Type="promotalkModel.state" Role="state" Multiplicity="0..1" />
+          <End Type="promotalkModel.supplier" Role="supplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="supplier">
+              <PropertyRef Name="StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="promotalkModelStoreContainer" CdmEntityContainer="promotalkEntities">
+          <FunctionImportMapping FunctionImportName="getSupplier_sp" FunctionName="promotalkModel.Store.getSupplier_sp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="promotalkModel.getSupplier_sp_Result">
+                <ScalarProperty Name="supplierID" ColumnName="supplierID" />
+                <ScalarProperty Name="supplierName" ColumnName="supplierName" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="countryName" ColumnName="countryName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RemoveImage" FunctionName="promotalkModel.Store.RemoveImage" />
+          <FunctionImportMapping FunctionImportName="getmonthyear" FunctionName="promotalkModel.Store.getmonthyear" />
+          <FunctionImportMapping FunctionImportName="search_result" FunctionName="promotalkModel.Store.search_result">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="promotalkModel.search_result_Result">
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="pagename" ColumnName="pagename" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="label" ColumnName="label" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getProductCatalog_sp" FunctionName="promotalkModel.Store.getProductCatalog_sp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="promotalkModel.getProductCatalog_sp_Result">
+                <ScalarProperty Name="catalogID" ColumnName="catalogID" />
+                <ScalarProperty Name="supplierID" ColumnName="supplierID" />
+                <ScalarProperty Name="thumbImageURL" ColumnName="thumbImageURL" />
+                <ScalarProperty Name="productTitle" ColumnName="productTitle" />
+                <ScalarProperty Name="isPremeum" ColumnName="isPremeum" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="isOffer" ColumnName="isOffer" />
+                <ScalarProperty Name="pdfURL" ColumnName="pdfURL" />
+                <ScalarProperty Name="seo_metaKeyword" ColumnName="seo_metaKeyword" />
+                <ScalarProperty Name="seo_OGImage" ColumnName="seo_OGImage" />
+                <ScalarProperty Name="seo_OGDesription" ColumnName="seo_OGDesription" />
+                <ScalarProperty Name="seo_OGTitle" ColumnName="seo_OGTitle" />
+                <ScalarProperty Name="offerProviderURl" ColumnName="offerProviderURl" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="offerExpireDate" ColumnName="offerExpireDate" />
+                <ScalarProperty Name="slugURL" ColumnName="slugURL" />
+                <ScalarProperty Name="supplierName" ColumnName="supplierName" />
+                <ScalarProperty Name="productCategory" ColumnName="productCategory" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="AppErrorLogs">
+            <EntityTypeMapping TypeName="promotalkModel.AppErrorLog">
+              <MappingFragment StoreEntitySet="AppErrorLog">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="stackTrace" ColumnName="stackTrace" />
+                <ScalarProperty Name="innerException" ColumnName="innerException" />
+                <ScalarProperty Name="datelog" ColumnName="datelog" />
+                <ScalarProperty Name="ErrorMsg" ColumnName="ErrorMsg" />
+                <ScalarProperty Name="ErrorID" ColumnName="ErrorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="buisinessInformations">
+            <EntityTypeMapping TypeName="promotalkModel.buisinessInformation">
+              <MappingFragment StoreEntitySet="buisinessInformation">
+                <ScalarProperty Name="slugURL" ColumnName="slugURL" />
+                <ScalarProperty Name="countryID" ColumnName="countryID" />
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="seo_OGTitle" ColumnName="seo_OGTitle" />
+                <ScalarProperty Name="seo_OGDesription" ColumnName="seo_OGDesription" />
+                <ScalarProperty Name="seo_OGImage" ColumnName="seo_OGImage" />
+                <ScalarProperty Name="seo_metaKeyword" ColumnName="seo_metaKeyword" />
+                <ScalarProperty Name="isPremeum" ColumnName="isPremeum" />
+                <ScalarProperty Name="zipCode" ColumnName="zipCode" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="logo" ColumnName="logo" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="isEmbroiders" ColumnName="isEmbroiders" />
+                <ScalarProperty Name="isScreenPrinter" ColumnName="isScreenPrinter" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+                <ScalarProperty Name="website" ColumnName="website" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="bname" ColumnName="bname" />
+                <ScalarProperty Name="buisinessID" ColumnName="buisinessID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="buisinessServices">
+            <EntityTypeMapping TypeName="promotalkModel.buisinessService">
+              <MappingFragment StoreEntitySet="buisinessServices">
+                <ScalarProperty Name="serviceID" ColumnName="serviceID" />
+                <ScalarProperty Name="buisinessID" ColumnName="buisinessID" />
+                <ScalarProperty Name="buisinessServicesID" ColumnName="buisinessServicesID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="catalogCatagories">
+            <EntityTypeMapping TypeName="promotalkModel.catalogCatagory">
+              <MappingFragment StoreEntitySet="catalogCatagory">
+                <ScalarProperty Name="productCategoryID" ColumnName="productCategoryID" />
+                <ScalarProperty Name="catalogID" ColumnName="catalogID" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categories">
+            <EntityTypeMapping TypeName="promotalkModel.category">
+              <MappingFragment StoreEntitySet="category">
+                <ScalarProperty Name="category1" ColumnName="category" />
+                <ScalarProperty Name="catalogID" ColumnName="catalogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="countries">
+            <EntityTypeMapping TypeName="promotalkModel.country">
+              <MappingFragment StoreEntitySet="country">
+                <ScalarProperty Name="countryName" ColumnName="countryName" />
+                <ScalarProperty Name="countryID" ColumnName="countryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="marketings">
+            <EntityTypeMapping TypeName="promotalkModel.marketing">
+              <MappingFragment StoreEntitySet="marketing">
+                <ScalarProperty Name="slugURL" ColumnName="slugURL" />
+                <ScalarProperty Name="shortDescription" ColumnName="shortDescription" />
+                <ScalarProperty Name="seo_OGTitle" ColumnName="seo_OGTitle" />
+                <ScalarProperty Name="seo_OGDesription" ColumnName="seo_OGDesription" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="seo_OGImage" ColumnName="seo_OGImage" />
+                <ScalarProperty Name="seo_metaKeyword" ColumnName="seo_metaKeyword" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="marketingID" ColumnName="marketingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="news">
+            <EntityTypeMapping TypeName="promotalkModel.news">
+              <MappingFragment StoreEntitySet="news">
+                <ScalarProperty Name="slugURL" ColumnName="slugURL" />
+                <ScalarProperty Name="shortDescription" ColumnName="shortDescription" />
+                <ScalarProperty Name="updateON" ColumnName="updateON" />
+                <ScalarProperty Name="seo_OGTitle" ColumnName="seo_OGTitle" />
+                <ScalarProperty Name="seo_OGDesription" ColumnName="seo_OGDesription" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="seo_OGImage" ColumnName="seo_OGImage" />
+                <ScalarProperty Name="seo_metaKeyword" ColumnName="seo_metaKeyword" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="newsID" ColumnName="newsID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="productCatalogs">
+            <EntityTypeMapping TypeName="promotalkModel.productCatalog">
+              <MappingFragment StoreEntitySet="productCatalog">
+                <ScalarProperty Name="pdfName" ColumnName="pdfName" />
+                <ScalarProperty Name="slugURL" ColumnName="slugURL" />
+                <ScalarProperty Name="offerExpireDate" ColumnName="offerExpireDate" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="offerProviderURl" ColumnName="offerProviderURl" />
+                <ScalarProperty Name="seo_OGTitle" ColumnName="seo_OGTitle" />
+                <ScalarProperty Name="seo_OGDesription" ColumnName="seo_OGDesription" />
+                <ScalarProperty Name="seo_OGImage" ColumnName="seo_OGImage" />
+                <ScalarProperty Name="seo_metaKeyword" ColumnName="seo_metaKeyword" />
+                <ScalarProperty Name="pdfURL" ColumnName="pdfURL" />
+                <ScalarProperty Name="isOffer" ColumnName="isOffer" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="isPremeum" ColumnName="isPremeum" />
+                <ScalarProperty Name="productTitle" ColumnName="productTitle" />
+                <ScalarProperty Name="thumbImageURL" ColumnName="thumbImageURL" />
+                <ScalarProperty Name="supplierID" ColumnName="supplierID" />
+                <ScalarProperty Name="catalogID" ColumnName="catalogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="productCategories">
+            <EntityTypeMapping TypeName="promotalkModel.productCategory">
+              <MappingFragment StoreEntitySet="productCategory">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="SupplierFor" ColumnName="SupplierFor" />
+                <ScalarProperty Name="productCategory1" ColumnName="productCategory" />
+                <ScalarProperty Name="productCategoryID" ColumnName="productCategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sendGridDetails">
+            <EntityTypeMapping TypeName="promotalkModel.sendGridDetail">
+              <MappingFragment StoreEntitySet="sendGridDetails">
+                <ScalarProperty Name="APIKEY" ColumnName="APIKEY" />
+                <ScalarProperty Name="projectname" ColumnName="projectname" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="services">
+            <EntityTypeMapping TypeName="promotalkModel.service">
+              <MappingFragment StoreEntitySet="services">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+                <ScalarProperty Name="serviceID" ColumnName="serviceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="states">
+            <EntityTypeMapping TypeName="promotalkModel.state">
+              <MappingFragment StoreEntitySet="state">
+                <ScalarProperty Name="countryID" ColumnName="countryID" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubscriberInfoes">
+            <EntityTypeMapping TypeName="promotalkModel.SubscriberInfo">
+              <MappingFragment StoreEntitySet="SubscriberInfo">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="subscriberID" ColumnName="subscriberID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="suppliers">
+            <EntityTypeMapping TypeName="promotalkModel.supplier">
+              <MappingFragment StoreEntitySet="supplier">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="SupplierFor" ColumnName="SupplierFor" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="supplierName" ColumnName="supplierName" />
+                <ScalarProperty Name="supplierID" ColumnName="supplierID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_customOrder">
+            <EntityTypeMapping TypeName="promotalkModel.tbl_customOrder">
+              <MappingFragment StoreEntitySet="tbl_customOrder">
+                <ScalarProperty Name="logo" ColumnName="logo" />
+                <ScalarProperty Name="companyURl" ColumnName="companyURl" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="catalogID" ColumnName="catalogID" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="other2" ColumnName="other2" />
+                <ScalarProperty Name="other1" ColumnName="other1" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
+                <ScalarProperty Name="companyName" ColumnName="companyName" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="orderID" ColumnName="orderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_events">
+            <EntityTypeMapping TypeName="promotalkModel.tbl_events">
+              <MappingFragment StoreEntitySet="tbl_events">
+                <ScalarProperty Name="slugURL" ColumnName="slugURL" />
+                <ScalarProperty Name="EventWebsite" ColumnName="EventWebsite" />
+                <ScalarProperty Name="seo_OGTitle" ColumnName="seo_OGTitle" />
+                <ScalarProperty Name="seo_OGDesription" ColumnName="seo_OGDesription" />
+                <ScalarProperty Name="seo_metaKeyword" ColumnName="seo_metaKeyword" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="featuredImag" ColumnName="featuredImag" />
+                <ScalarProperty Name="decorators" ColumnName="decorators" />
+                <ScalarProperty Name="sourceUrl" ColumnName="sourceUrl" />
+                <ScalarProperty Name="emroidersEvent" ColumnName="emroidersEvent" />
+                <ScalarProperty Name="printerEvent" ColumnName="printerEvent" />
+                <ScalarProperty Name="associationEvent" ColumnName="associationEvent" />
+                <ScalarProperty Name="industrialEvent" ColumnName="industrialEvent" />
+                <ScalarProperty Name="Hoster" ColumnName="Hoster" />
+                <ScalarProperty Name="TillDateime" ColumnName="TillDateime" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="dateTime" ColumnName="dateTime" />
+                <ScalarProperty Name="venue" ColumnName="venue" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="eventID" ColumnName="eventID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="technologies">
+            <EntityTypeMapping TypeName="promotalkModel.technology">
+              <MappingFragment StoreEntitySet="technology">
+                <ScalarProperty Name="slugURL" ColumnName="slugURL" />
+                <ScalarProperty Name="shortDescription" ColumnName="shortDescription" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="seo_OGTitle" ColumnName="seo_OGTitle" />
+                <ScalarProperty Name="seo_OGDesription" ColumnName="seo_OGDesription" />
+                <ScalarProperty Name="seo_OGImage" ColumnName="seo_OGImage" />
+                <ScalarProperty Name="seo_metaKeyword" ColumnName="seo_metaKeyword" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="technologyID" ColumnName="technologyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="promotalkModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="pwd" ColumnName="pwd" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

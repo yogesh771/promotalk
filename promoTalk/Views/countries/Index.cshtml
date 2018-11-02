@@ -1,0 +1,33 @@
+﻿@model IEnumerable<promoTalk.Models.country>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.countryName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.countryName)
+        </td>
+        <td>
+            <a href="@Url.Action("Edit", "Countries", new { id = item.countryID})"><i class="glyphicon glyphicon-pencil"></i></a>          
+           
+        </td>
+    </tr>
+}
+
+</table>

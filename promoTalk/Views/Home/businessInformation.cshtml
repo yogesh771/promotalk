@@ -1,0 +1,221 @@
+﻿
+@{
+    <title>@ViewBag.type</title>
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<header class="entry-header">
+
+    <div class="title_border">
+        <h2>@ViewBag.HeadTitle </h2>
+    </div>
+</header>
+
+@*<div class="catelog-main-search  catelog-main-search1">
+
+    <div class="container">
+        <div class="search-box">
+            <ul>
+                <li>
+                    <input type="text" class="form-control" id="txtName" placeholder="Business name" />
+                </li>
+                <li>
+                    <input type="text" class="form-control" id="txtLocation" placeholder="Location" />
+                </li>
+                <li>
+                    <input type="hidden" name="ofsubmitted" value="1">
+                    <input type="button" class="btn btn-defaul" value="Search" onclick="return searchResult();" />
+                    <input type="button" class="btn btn-defaul" value="Reset" onclick="return AllResult();" />
+                    <input type="hidden" id="type" value='@ViewBag.type' />
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>*@
+<div class="catelog-main-search catelog-main-search1">
+
+    <input type="text" class="form-control" id="txtName" placeholder="Business name" />
+
+    <input type="text" class="form-control" id="txtLocation" placeholder="Location" />
+    <input type="hidden" name="ofsubmitted" value="1">
+    <input type="hidden" id="type" value='@ViewBag.type' />
+
+    <input type="button" class="btn btn-defaul" value="Search" onclick="return searchResult();" />
+
+    <input type="button" class="btn btn-defaul" value="Reset" onclick="return AllResult();" />
+
+</div> 
+    <div class="container">
+        <div class="col-md-8 box-2 running-campaigns sidebar-right" style="margin-top:25px;">
+            <div class="table-responsive col-lg-12" id="viewResult">
+               
+            </div>
+        </div>
+        <div class="col-md-4" style="margin-top:25px;">
+            <div class="col-lg-12 s-form">
+                @Html.Action("partial_subscription")
+            </div>
+            <div class="col-lg-12" style="padding:15px 0 15px; float:left;">
+                <a href="http://camerareadyart.com" target="_blank"><img src="~/Content/marketing/news.jpg" /></a>
+            </div>
+
+        </div>
+    </div>
+
+
+<script>
+   
+    $(document).ready(function () {
+        AllResult();
+    })
+</script>
+<script>
+   
+    function searchResult() {
+        
+        var txtName = $("#txtName").val();
+        var txtLocation = $("#txtLocation").val();
+        var type = $("#type").val();
+        
+        $.ajax({
+            url: '/Home/partial_buisinessInformation',
+            type: 'GET',
+            data: { 'type': type, 'location': txtLocation, 'name': txtName },
+            success: function (data) {
+                
+               
+                $('#viewResult').html(data);
+            },
+            error: function () {
+                bootbox.alert({
+                    title: "Alert !",
+                    message: '<p>Whooaaa! Something went wrong..</p>',
+                    timeOut: 2000
+
+                });
+
+            }
+        });
+    }
+
+    function AllResult() {
+        var type = $("#type").val();
+        
+        $.ajax({
+            url: '/Home/partial_buisinessInformation',
+            type: 'GET',
+            data: { 'type': type, 'name': '', 'location': '' },
+            success: function (data) {
+                
+               
+                $('#viewResult').html(data);
+            },
+            error: function () {
+                bootbox.alert({
+                    title: "Alert !",
+                    message: '<p>Whooaaa! Something went wrong..</p>',
+                    timeOut: 2000
+
+                });
+
+            }
+        });
+    }
+</script>
+<link href="~/Content/base/autocomplete.css" rel="stylesheet" />
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.0/jquery-ui.min.js"></script>
+ <script type = "text/javascript" >
+     $(document).ready(function () {
+         $("#txtName").autocomplete({
+             source: function (request, response) {
+            $.ajax({
+                url: "./Home/searchInBusinessTable",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    searchKeyWord: request.term,
+                    ColummName:'bname',
+                    type: $("#type").val()
+                },
+                success: function(data) {
+                    response($.map(data, function(item) {
+                        return {
+                            label: item.bname,
+                            value: item.bname
+                        };
+                    }))
+                },
+                error: function() {
+                    alert('something went wrong !');
+                }
+            })
+        },
+        messages: {
+            noResults: "",
+            results: ""
+        }
+    });
+}) </script> 
+<script type="text/javascript">
+     $(document).ready(function () {
+         $("#txtLocation").autocomplete({
+             source: function (request, response) {
+            $.ajax({
+                url: "./Home/searchInBusinessTable",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    searchKeyWord: request.term,
+                    ColummName: 'location',
+                    type: $("#type").val()
+                },
+                success: function(data) {
+                    response($.map(data, function(item) {
+                        return {
+                            label: item.City,
+                            value: item.City
+                        };
+                    }))
+                },
+                error: function() {
+                    alert('something went wrong !');
+                }
+            })
+        },
+        messages: {
+            noResults: "",
+            results: ""
+        }
+    });
+}) </script>   
+<style>
+    .search-box ul li {
+        width:33.33% !important
+    }
+    .search-box ul li:before {
+        display:none;
+    }
+    .catelog-main-search ul li text {
+    float: left;
+    width: 100%;
+    font-size: 16px;
+    padding: 10px;
+    border: 0px;
+    border-radius: 3px;
+    background: #fff;
+}
+
+    .search-box li text {
+        background-color: #1abc9c;
+        color: #000;
+        font-size: inherit;
+        padding: .5em;
+        padding-right: 2.5em;
+        border: 0;
+        margin: 0;
+        border-radius: 3px;
+        text-indent: 0.01px;
+        text-overflow: '';
+        -webkit-appearance: button;
+    }
+</style>

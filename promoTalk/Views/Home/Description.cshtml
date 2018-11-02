@@ -1,0 +1,94 @@
+﻿@{ var modelView = @ViewBag.modelView; }
+@{
+   <title>@modelView.title</title>
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+ 
+
+        @if (modelView != null)
+        {
+
+            <div class="container-a des-content col-lg-8">
+
+                <div class="col-12"> 
+                    <h3>@modelView.title</h3> 
+                    @{ var lastUpdate = ViewBag.lastUpdate;
+                                if (@lastUpdate != null)
+                                {
+                        <h6>Last Updated On: @lastUpdate.ToString("MM/dd/yyyy") </h6>
+                                }
+                    }
+                    <div class="col-lg-12" style="margin-bottom:20px;"><img src='@modelView.seo_OGImage' alt="" /></div>
+                    <div class="col-lg-12 sameFonts" style="margin-bottom:20px;">@Html.Raw(modelView.description)</div>
+                </div>
+            </div>
+                   <div class="col-lg-4 t-m" style="margin:27px 0 0 0;">
+                            <div class="col-lg-12 s-form">
+                                @Html.Action("partial_subscription")
+                            </div>
+                            <div class="col-lg-12 event-box-left event-box-left1 " style="padding:0px 0 15px; float:left;">
+                                <h5>Recent Posts</h5>
+                                @{ if (ViewBag.myList != null && ViewBag.category != null)
+                        {
+                    <ul>
+                        @if (ViewBag.category == "news")
+                                {
+                                    foreach (var item in (IEnumerable<promoTalk.Models.news>)ViewBag.myList)
+                                    {
+                                <li>
+                                    <a href="@Url.Action("News_Description",  new { id = item.newsID, title = item.title,  category = "news" })">@item.title</a>
+                                </li>
+                                    }
+                                }
+                        @if (ViewBag.category == "Marketing")
+                                {
+                                    foreach (var item in (IEnumerable<promoTalk.Models.marketing>)ViewBag.myList)
+                                    {
+                                <li>
+                                    <a href="@Url.Action("Marketing_Description",  new { id = item.marketingID, title = item.title,  category = "Marketing" })">@item.title</a>
+                                </li>
+                                    }
+                                }
+                        @if (ViewBag.category == "technology")
+                                {
+                                    foreach (var item in (IEnumerable<promoTalk.Models.technology>)ViewBag.myList)
+                                    {
+                                <li>
+                                    <a href="@Url.Action("technology_Description",  new { id = item.technologyID, title = item.title,  category = "technology" })">@item.title</a>
+                                </li>
+                                    }
+                                }
+                    </ul>
+                        }
+                                }
+                            </div>
+                            <div class="col-lg-12 event-box-left event-box-left1 margin-b " style="padding:0px 0 15px; float:left;">
+                                <h5>CATEGORIES</h5>
+                                <ul>
+                                    <li><a href="@Url.Action("News", "Home")">Promo News</a></li>
+                                    <li><a href="@Url.Action("events","Home")">Promo Event</a></li>
+                                    <li><a href="@Url.Action("Marketing", "Home")">Promo Marketing</a></li>
+                                    <li><a href="@Url.Action("Technology", "Home")">Promo Technology</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-12" style="padding:0px 0 15px; float:left;">
+                            <a href="http://camerareadyart.com" target="_blank"><img src="~/Content/marketing/news.jpg" /></a>
+                            </div>
+
+                        </div>
+                   
+                    }
+
+                </div>
+
+
+
+
+
+<style>
+     .col-12 {
+        padding: 10px;
+    }
+</style>

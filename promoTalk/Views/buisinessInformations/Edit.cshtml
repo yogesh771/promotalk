@@ -1,0 +1,441 @@
+﻿@model promoTalk.Models.buisinessInformation
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutInternal.cshtml";
+}
+
+@using (Html.BeginForm("Edit", "buisinessInformations", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>business Information</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.buisinessID)
+        <div class="form-group">
+            @Html.LabelFor(model => model.bname, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.bname, new { htmlAttributes = new { @class = "form-control" , @onblur = "slugify(bname,slugURL)" } })
+                @Html.ValidationMessageFor(model => model.bname, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.slugURL, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.slugURL, new { htmlAttributes = new { @class = "form-control", @onblur = "checkExists(slugURL,'buisinessInformations'," + Model.buisinessID + ",0)" } })
+                @Html.ValidationMessageFor(model => model.slugURL, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="control-label col-md-3">Logo</label>
+                <div class="col-md-9 choose-img">
+                  
+                      <img id="pic" src='@Model.logo' alt="Image" width="80px" height="80px">
+                       
+                    <input type="file" id="photoA" name="file" class="choose-input"> <input type="button" value="Remove Image" onclick="RemoveImage(@Model.buisinessID,'buisinessInformation')"/>
+                    @Html.HiddenFor(model => model.logo)
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.website, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.website, new { htmlAttributes = new { @class = "form-control", @onblur = "checkExists1(website,'buisinessInformations',"+@Model.buisinessID+",1)" } })@*//isoffer=0 for slugURL and 1 for website url*@
+                @Html.ValidationMessageFor(model => model.website, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ContactPerson, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ContactPerson, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ContactPerson, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.phone, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.phone, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.location, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.location, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.location, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.countryID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("countryID",null,new { @class = "form-control", onChange = "fillState()" })
+
+                @Html.ValidationMessageFor(model => model.countryID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.countryID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.countryID, new SelectList(ViewBag.countryID, "countryID", "countryName"), Model.country.countryName, new { @class = "form-control", onChange = "fillState()" })
+
+                @Html.ValidationMessageFor(model => model.countryID, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.StateID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("StateID", null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.StateID, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.StateID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.StateID, new SelectList(ViewBag.StateID, "StateID", "StateName"),Model.state.StateName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.StateID, "", new { @class = "text-danger" })
+            </div>
+
+        </div>*@
+      
+        <div class="form-group">
+            @Html.LabelFor(model => model.zipCode, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.zipCode, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.zipCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.isScreenPrinter, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(model => model.isScreenPrinter)
+
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.isEmbroiders, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(model => model.isEmbroiders)
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.isPremeum, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(model => model.isPremeum)
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.isActive, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(model => model.isActive)
+                </div>
+            </div>
+        </div>
+        @{ var services = (IEnumerable<promoTalk.Models.selectedService>)ViewBag.serviceIDs;}
+
+        @{
+            <div class="form-group">
+                <label class="control-label col-md-2">Categories</label>
+                <div class="col-md-10">
+                    @{foreach (var service in @services)
+                        {
+                            <div class="col-lg-4" style="padding:5px">
+                                <input type="checkbox" id='chk_@service.serviceID' onclick="selectID(@service.serviceID)" checked='@service.ischecked' />&nbsp;@service.ServiceName
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        }
+        @Html.HiddenFor(model => model.servicesIDs)
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default"  />
+            </div>
+        </div>
+    </div>
+                    }
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script>
+    arrayService = [];
+    function selectID(id)
+    {
+        
+        var checkbox=document.getElementById('chk_'+id) ;
+            arrayService = $('#servicesIDs').val().toString().split(',');
+
+        if(checkbox.checked)
+        {
+            arrayService.push(id);
+        }
+        else
+        {
+            var index = arrayService.indexOf(id.toString());
+            if (index > -1) {
+                arrayService.splice(index, 1);
+            }
+        }
+        var arrString = arrayService.join(",");
+        $('#servicesIDs').val(arrString)
+
+       
+    }
+</script>
+
+<script>
+    function readURL(input) {
+        
+        if (input.files && input.files[0]) {
+            //Get reference of FileUpload.
+            var fileUpload = document.getElementById("photoA");
+            if (fileUpload.value.length > 0) {
+                //Check whether the file is valid Image.
+                var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(.jpg|.png|.gif)$");
+                if (regex.test(fileUpload.value.toLowerCase())) {
+                    var reader = new FileReader();
+                    var s = fileUpload.files[0];
+                    reader.readAsDataURL(s);
+                    reader.onload = function (e) {
+                        var image = new Image();
+                        image.src = e.target.result;
+                        image.onload = function () {
+                            
+                            var height = this.height;
+                            var width = this.width;
+                            if (height > 200 || width > 200) {
+                                
+
+                                bootbox.alert({
+                                    title: "Alert !",
+                                    message: 'Height and Width must not exceed 200px.'
+                                });
+                                return false;
+                            }
+                            else {
+
+                                var reader1 = new FileReader();
+
+                                reader1.onload = function (e) {
+                                    $('#pic').attr('src', e.target.result);
+                                }
+
+                                reader1.readAsDataURL(input.files[0]);
+                            }
+                        };
+                    }
+                }
+                else {
+
+                    bootbox.alert({
+                        title: "Alert !",
+                        message: 'Please select .jpg,.png,.gif'
+                    });
+                    return false;
+                }
+            }
+
+        }
+    }
+
+    $("#photoA").change(function () {
+        readURL(this);
+    });
+</script>
+
+<script>
+    $(function () {
+        $('div[onload]').trigger('onload');
+    });
+
+    function checked(serviceID, ischecked)
+    {
+        
+        var str = $('#servicesIDs').val();
+        if (ischecked) {                      
+            str = str + "," + serviceID;
+        }
+        $('#servicesIDs').val(str);
+    }
+</script>
+
+
+<script>
+    function RemoveImage(ID, Modelname)
+    {
+        bootbox.confirm({
+            title: "Confirmation !",
+            message: "Are you sure to delete image",
+            buttons: {
+                cancel: {
+                    label: '<i class="fa fa-times"></i> Cancel'
+                },
+                confirm: {
+                    label: '<i class="fa fa-check"></i> Confirm'
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                                     
+                    $.ajax({
+                        url: '/Account/RemoveImage',
+                        type: 'POST',
+                        data: { 'id': ID, 'Modulename': Modelname },
+                        success: function (data) {
+                                                    
+                            if (data == 1) {
+                                bootbox.confirm({
+                                    title: "Confirmation !",
+                                    message: "Image deleted",
+                                    buttons: {                                        
+                                        confirm: {
+                                            label: '<i class="fa fa-check"></i> Confirm'
+                                        }
+                                    },
+                                    callback: function (result) {
+                                        window.location.href = window.location
+                                    }
+                                })
+                            }
+                            else {
+                                bootbox.alert({
+                                    title: "Alert !",
+                                    message: '<p>Some thing went wrong .</p>',
+                                    timeOut: 2000
+                                });
+
+                            }
+                        },
+                        error: function ()
+                        {
+                            bootbox.alert({
+                                title: "Alert !",
+                                message: '<p>Some thing went wrong .</p>',
+                                timeOut: 2000
+                            });
+                        }
+                    });
+                }
+
+            }
+        });
+    }
+</script>
+
+
+<script>
+    function fillState()
+    {
+        var countryID = $('#countryID').val();
+        if (countryID != "")
+        {
+           
+              $.ajax({
+            url: '/suppliers/fillState',
+            type: 'GET',
+            data: { 'countryID': countryID },
+            success: function (result) {
+                
+                $("#StateID").html("");
+                $("#StateID").append($('<option></option>').val('').html(' State'));
+                $.each($.parseJSON(result), function (i, VSC) {
+                    $("#StateID").append($('<option></option>').val(VSC.StateID).html(VSC.StateName))
+                })
+
+            },
+            error: function () {
+
+                bootbox.alert({
+                    title: "Alert !",
+                    message: '<p>Whooaaa! Something went wrong..</p>',
+                    timeOut: 2000
+
+                });
+            },
+            });
+        }
+    }
+</script>
+
+@{var res2 = ViewBag.result2;}
+<script>
+    
+    if ('@res2' != null) {
+        if ('@res2' == 'EXISTS') {
+            bootbox.alert({
+                title: "Alert !",
+                message: '<p>Website URL already Exists.</p>',
+                timeOut: 2000
+            });
+        }
+    }
+</script>
+<script>
+    function checkExists1(elementID,tbleName,ID,isoffer)
+    {
+        
+        slugURL = $(elementID).val();
+        $.ajax({
+            url: '/Account/isSlugExist',
+            data: { 'slugURL': slugURL, 'tblname': tbleName, 'ID': ID, 'isOffer': isoffer },
+            success: function (data) {
+                
+                if (data=="False") {
+                    bootbox.alert({
+                        title: "Alert !",
+                        message: '<p>Website URL already Exists.</p>',
+                        timeOut: 2000
+                    });
+                }
+            },
+            error: function () {
+                bootbox.alert({
+                    title: "Alert !",
+                    message: '<p>Some thing went wrong .</p>',
+                    timeOut: 2000
+                });
+            }
+        });
+    }
+</script>
