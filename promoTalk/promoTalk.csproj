@@ -977,7 +977,6 @@
     <Content Include="Views\productCatalogs\catalogcategory.cshtml" />
     <Content Include="Views\Home\offerDescription.cshtml" />
     <Content Include="Views\customorder\Index.cshtml" />
-    <Content Include="Views\customorder\Ordercustomoffer.cshtml" />
     <Content Include="Views\customorder\Edit.cshtml" />
     <Content Include="Views\Home\PageNotFound.cshtml" />
     <Content Include="Views\customorder\Requestform.cshtml" />

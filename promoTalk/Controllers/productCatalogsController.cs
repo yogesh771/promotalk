@@ -42,7 +42,8 @@ namespace promoTalk.Controllers
     
         public ActionResult Create(int id )
         {
-            fillDropDown(id);           
+            fillDropDown(id);
+            ViewBag.supplierID = db.suppliers.Where(e => e.SupplierFor == id && e.isActive == true).Select(e => new { e.supplierID, e.supplierName });
             productCatalog productCatalog = new productCatalog();
             productCatalog.isOffer = id==2? true:false;
             return View(productCatalog);

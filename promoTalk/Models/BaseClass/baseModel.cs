@@ -240,7 +240,7 @@ namespace promoTalk.Models
 
         public static int GetIntOfMonthName(string monthName)
         {
-            List<string> IntMonth = new List<string>() { "January", "February", "March" };
+            List<string> IntMonth = new List<string>() { "January", "February", "March","April","May","June","July","August","September","October","November","December" };
             if (IntMonth.Contains(monthName))
             {
              return   IntMonth.IndexOf(monthName)+1;

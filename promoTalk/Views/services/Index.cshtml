@@ -13,14 +13,14 @@
 <table class="table"  id="tblData">
     <thead>
         <tr>
-            <th><img src="~/images/arrow.jpg" width="27" height="34"></th>
+            <th>Sr</th>
             <th>
                 @Html.DisplayNameFor(model => model.ServiceName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.createdDate)
             </th>
-            <th></th>
+            <th>Action</th>
     </thead>
     @{
         var a = Model.Count();
@@ -47,7 +47,7 @@
                     @Html.DisplayFor(modelItem => item.ServiceName)
                 </td>
                 <td>
-                    @item.createdDate.ToString("dd-MMM-YYYY")
+                    @item.createdDate.ToString("dd-MMM-yyyy")
                 </td>
                 <td>
                     <a href="@Url.Action("Edit", "services", new { id = item.serviceID })"><i class="glyphicon glyphicon-pencil"></i></a>

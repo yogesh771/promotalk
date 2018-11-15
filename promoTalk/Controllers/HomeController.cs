@@ -171,8 +171,7 @@ namespace promoTalk.Controllers
                 return PartialView("_partialevents", isFetureEvent==true?  db.tbl_events.Where(e => e.dateTime >= dt).OrderBy(e => e.dateTime).ToList(): db.tbl_events.Where(e => e.dateTime < dt).OrderBy(e => e.dateTime).ToList());
             }
             else {
-                IQueryable<tbl_events> query = db.Set<tbl_events>();
-                var tblevents = db.tbl_events.Where(e => e.dateTime >= dt);
+                IQueryable<tbl_events> query = db.Set<tbl_events>();               
                 if (eventType != "All Events")
                 {
                     switch (eventType) {
