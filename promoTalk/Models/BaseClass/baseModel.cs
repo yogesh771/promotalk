@@ -2,20 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Net;
-using System.Net.Mail;
 using System.Text;
 using System.Web.Mvc;
 using System.Globalization;
 using System.Reflection;
 using System.Web.Routing;
-using System.Data.Entity;
 using System.Security.Cryptography;
 using System.IO;
-using promoTalk.Models;
 using SendGrid.Helpers.Mail;
 using SendGrid;
-using SendGrid.Helpers.Mail;
 
 namespace promoTalk.Models
 {
@@ -130,22 +125,7 @@ namespace promoTalk.Models
     {
          FullName,  LoginID, userType
     }
-
-    public enum FileType
-    {
-        PDF,
-        DOC,
-        TXT,
-        CSV,
-        XLS,
-        XLSX,
-        JPG,
-        PNG,
-        BMP,
-    }
-
-
-
+        
     public static class BaseUtil
     {
         private static baseClass db = new baseClass();
@@ -258,13 +238,25 @@ namespace promoTalk.Models
 
         #region Accesible Pages
 
-     
+        public static int GetIntOfMonthName(string monthName)
+        {
+            List<string> IntMonth = new List<string>() { "January", "February", "March" };
+            if (IntMonth.Contains(monthName))
+            {
+             return   IntMonth.IndexOf(monthName)+1;
+            }
+            return 0;
+        }
         public static List<string> ListControllerExcluded()
         {
-            List<string> list = new List<string>() { "JSON", "HOME","ACCOUNT" };
+            List<string> list = new List<string>() { "HOME","ACCOUNT","CUSTOMORDER" };
             return list;
         }
-     
+        public static List<string> ListControllerTocheckLogin()
+        {
+            List<string> list = new List<string>() { "BUISINESSINFORMATIONS",  "TECHMOLOGIE_S", "SERVICE", "PRODUCTCATEGORIES", "PRODUCTCATALOGS", "EVENT_S", "NEWS_S", "MARKETING_S", "SUPPLIERS", "SUBSCRIBERINFORMTION" };
+            return list;
+        }
         public static bool CheckAuthentication(ActionExecutingContext filterContext)
         {   List<string> accesiblePages = null;
             bool result = false;

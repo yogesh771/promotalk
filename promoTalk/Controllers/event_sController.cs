@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -8,15 +7,14 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using promoTalk.Models;
-using System.IO;
 
 namespace promoTalk.Controllers
 {
-    public class event_sController : Controller
+    public class event_sController : BaseClass
     {
         private promotalkEntities db = new promotalkEntities();
 
-        // GET: events
+       
         public ActionResult Index()
         {
             return View();
@@ -28,22 +26,8 @@ namespace promoTalk.Controllers
 
             return PartialView("_partialEvents", db.tbl_events.Where(e => e.dateTime >= txtFromDate && e.dateTime <= txtToDate).OrderByDescending(e => e.createdDate).ToList());
         }
-        // GET: events/Details/5
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            tbl_events tbl_events = await db.tbl_events.FindAsync(id);
-            if (tbl_events == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tbl_events);
-        }
-
-        // GET: events/Create
+      
+      
         public ActionResult Create()
         {
             return View();
@@ -60,14 +44,10 @@ namespace promoTalk.Controllers
                 return View(tbl_events);
             }
             ViewBag.result = "f";
-            String fileName = ""; 
-           
+                    
             if (file != null)
-            {
-                fileName = Guid.NewGuid() + "_" + Path.GetFileName(file.FileName);
-                var path = Path.Combine(Server.MapPath("~/Content/marketing"), fileName);
-                file.SaveAs(path);
-                tbl_events.featuredImag = "/Content/marketing/" + fileName;
+            {               
+                tbl_events.featuredImag = UploadFile(file, "/Content/marketing"); 
             }
            
             tbl_events.createdDate = BaseUtil.GetCurrentDateTime();
@@ -108,14 +88,10 @@ namespace promoTalk.Controllers
             {
                 ViewBag.result1 = "EXISTS";
                 return View(tbl_events);
-            }
-            String fileName = ""; 
+            }          
             if (file != null)
             {
-                fileName = Guid.NewGuid() + "_" + Path.GetFileName(file.FileName);
-                var path = Path.Combine(Server.MapPath("~/Content/marketing"), fileName);
-                file.SaveAs(path);
-                tbl_events.featuredImag = "/Content/marketing/" + fileName;
+                tbl_events.featuredImag = UploadFile(file, "/Content/marketing");
             }
             tbl_events.createdDate = BaseUtil.GetCurrentDateTime();
             if (ModelState.IsValid)

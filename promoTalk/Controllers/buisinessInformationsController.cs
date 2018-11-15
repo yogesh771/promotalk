@@ -27,26 +27,25 @@ namespace promoTalk.Controllers
             var serviceList = db.buisinessServices.Include(e => e.service).Where(e => e.buisinessID == id).OrderBy(e => e.service.ServiceName).ToList();
             return PartialView("_partialBuisinessServices", serviceList);
         }
-        // GET: buisinessInformations/Create
-        public ActionResult Create()
-        {
-           // ViewBag.StateID = new SelectList(db.states.ToList(), "StateID", "StateName");
-            ViewBag.StateID = db.states.Select(e => new { e.StateID, e.StateName });
-            ViewBag.countryID = db.countries.Select(e => new { e.countryID, e.countryName });
-            ViewBag.serviceID = db.services.Where(e=>e.isActive==true).OrderBy(e => e.ServiceName).ToList();
-            return View();
-        }
 
-        // POST: buisinessInformations/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(buisinessInformation buisinessInformation, HttpPostedFileBase file)
+        private void fillDropdown()
         {
             ViewBag.StateID = db.states.Select(e => new { e.StateID, e.StateName });
             ViewBag.countryID = db.countries.Select(e => new { e.countryID, e.countryName });
             ViewBag.serviceID = db.services.Where(e => e.isActive == true).OrderBy(e => e.ServiceName).ToList();
+        }
+        // GET: buisinessInformations/Create
+        public ActionResult Create()
+        {
+            fillDropdown();
+            return View();
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(buisinessInformation buisinessInformation, HttpPostedFileBase file)
+        {
+            fillDropdown();
 
             AccountController oAccountController = new AccountController();
             if (!oAccountController.isSlugExist(buisinessInformation.slugURL, "buisinessInformations", buisinessInformation.buisinessID, 0))
@@ -132,29 +131,21 @@ namespace promoTalk.Controllers
             }
             ViewBag.selectedCategoriesID = selectedCategoriesID;
             ViewBag.serviceIDs = listselectedService;
-            // ViewBag.StateID = db.states.Select(e => new { e.StateID, e.StateName });
-            ViewBag.StateID = new SelectList(db.states.Select(e => new { e.StateID, e.StateName }), "StateID", "StateName", buisinessInformation.StateID);
-            //ViewBag.countryID = db.countries.Select(e => new { e.countryID, e.countryName });
+           
+            ViewBag.StateID = new SelectList(db.states.Select(e => new { e.StateID, e.StateName }), "StateID", "StateName", buisinessInformation.StateID);            
             ViewBag.countryID = new SelectList(db.countries.Select(e => new { e.countryID, e.countryName }), "countryID", "countryName", buisinessInformation.countryID);
 
-            int index = selectedCategoriesID.LastIndexOf(',');
-            // Console.WriteLine(catalogcatagory.Remove(index, 1));
+            int index = selectedCategoriesID.LastIndexOf(',');          
             ViewBag.catalogcatagory = selectedCategoriesID.Substring(0, index);
 
             buisinessInformation.servicesIDs = selectedCategoriesID.Substring(0, index); 
             return View(buisinessInformation);
-        }
-
-        // POST: buisinessInformations/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        }        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(buisinessInformation buisinessInformation, HttpPostedFileBase file)
         {
-            ViewBag.StateID = db.states.Select(e => new { e.StateID, e.StateName });
-            ViewBag.countryID = db.countries.Select(e => new { e.countryID, e.countryName });
-            ViewBag.serviceID = db.services.Where(e => e.isActive == true).OrderBy(e => e.ServiceName).ToList();
+            fillDropdown();
             AccountController oAccountController = new AccountController();
             if (!oAccountController.isSlugExist(buisinessInformation.slugURL, "buisinessInformations", buisinessInformation.buisinessID, 0))
             {

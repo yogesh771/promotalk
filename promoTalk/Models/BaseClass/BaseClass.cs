@@ -1,7 +1,6 @@
 ﻿
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
 
@@ -16,15 +15,8 @@ namespace promoTalk.Models
             String ActionName = filterContext.ActionDescriptor.ActionName.ToUpper();
             String Action = string.Format("{0}Controller{1}", ControllerName, ActionName).ToUpper();
 
-            if (BaseUtil.ListControllerExcluded().Contains(ControllerName))
+            if (BaseUtil.ListControllerTocheckLogin().Contains(ControllerName))
             {
-                if (ControllerName == "ACCOUNT" || ControllerName == "HOME" || (ControllerName == "marketings" && ActionName=="INDEX")
-                      || (ControllerName == "technologies" && ActionName == "INDEX") || (ControllerName == "news" && ActionName == "INDEX")
-                       || (ControllerName == "productCatalogs" && ActionName == "INDEX") )
-                {
-                    return;
-                }
-            }
                 if (BaseUtil.GetSessionValue(AdminInfo.LoginID.ToString()) == "")
                 {
                     filterContext.Result = null;
@@ -32,7 +24,7 @@ namespace promoTalk.Models
                     return;
                 }
                 return;
-           
+            }
         }
         protected override void OnException(ExceptionContext exceptionContext)
         {
@@ -49,7 +41,14 @@ namespace promoTalk.Models
                 Response.Redirect("~/Views/Shared/Error.cshtml");
             }
         }
-
+        public string UploadFile(HttpPostedFileBase file, string path)
+        {
+            String fileName = "";
+            fileName = Guid.NewGuid() + "_" + Path.GetFileName(file.FileName);
+            var savedToPath = Path.Combine(Server.MapPath("~" + path), fileName);
+            file.SaveAs(savedToPath);
+            return path + "/" + fileName;
+        }
     }
         
 }

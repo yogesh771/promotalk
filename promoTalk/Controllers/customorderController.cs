@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,36 +6,19 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using promoTalk.Models;
-using System.IO;
+
 
 namespace promoTalk.Controllers
 {
-    public class customorderController : Controller
+    public class customorderController : BaseClass
     {
         private promotalkEntities db = new promotalkEntities();
-
-        // GET: customorder
+     
         public async Task<ActionResult> Index()
         {
             return View(await db.tbl_customOrder.OrderByDescending(e=>e.createdDate).ToListAsync());
         }
 
-        // GET: customorder/Details/5
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            tbl_customOrder tbl_customOrder = await db.tbl_customOrder.FindAsync(id);
-            if (tbl_customOrder == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tbl_customOrder);
-        }
-
-        // GET: customorder/Create
         [HttpGet]
         public ActionResult Requestform(int? id, string category)
         {
@@ -73,9 +54,7 @@ namespace promoTalk.Controllers
             ViewBag.catalogID = id;
             return View();
         }
-        // POST: customorder/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]       
         public ActionResult Requestform(tbl_customOrder tbl_customOrder, HttpPostedFileBase file)
@@ -83,13 +62,10 @@ namespace promoTalk.Controllers
             TempData["result"] = "f";
             tbl_customOrder.isActive = true;
             tbl_customOrder.createdDate = BaseUtil.GetCurrentDateTime();
-            String fileName = "";
+           
             if (file != null)
-            {
-                fileName = Guid.NewGuid() + "_" + Path.GetFileName(file.FileName);
-                var path = Path.Combine(Server.MapPath("~/Content/img"), fileName);
-                file.SaveAs(path);
-                tbl_customOrder.logo = "/Content/img/" + fileName;
+            {               
+                tbl_customOrder.logo = UploadFile(file,"/Content/img");
             }
             if (ModelState.IsValid)
             {
@@ -100,8 +76,7 @@ namespace promoTalk.Controllers
             }
             return View();
         }
-
-        // GET: customorder/Edit/5
+               
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -116,9 +91,6 @@ namespace promoTalk.Controllers
             return View(tbl_customOrder);
         }
 
-        // POST: customorder/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(tbl_customOrder tbl_customOrder)

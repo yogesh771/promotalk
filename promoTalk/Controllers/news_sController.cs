@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using promoTalk.Models;
-using System.IO;
 
 namespace promoTalk.Controllers
 {
-    public class news_sController : Controller
+    public class news_sController : BaseClass
     {
         private promotalkEntities db = new promotalkEntities();
 
@@ -24,14 +20,11 @@ namespace promoTalk.Controllers
             
         // GET: news/Create
         public ActionResult Create()
-        {
-            
+        {            
             return View();
         }
 
-        // POST: news/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(news news, HttpPostedFileBase file)
@@ -45,19 +38,11 @@ namespace promoTalk.Controllers
             ViewBag.result = "f";
             try
             {
-                String fileName = ""; 
+               
                 if (file != null)
-                {
-                    fileName = Guid.NewGuid() + "_" + Path.GetFileName(file.FileName);
-                    var path = Path.Combine(Server.MapPath("~/Content/marketing"), fileName);
-                    file.SaveAs(path);
-                    news.seo_OGImage =  "/Content/marketing/" + fileName;
-                }
-                //else
-                //{
-                //    news.seo_OGImage = domainName + "/Content/img/" + "emptyLogo.jpg";
-                //}
-
+                {                   
+                    news.seo_OGImage = UploadFile(file, "/Content/marketing");
+                }              
 
                 news.createdDate = BaseUtil.GetCurrentDateTime();
                 if (ModelState.IsValid)
@@ -90,10 +75,7 @@ namespace promoTalk.Controllers
             }
             return View(news);
         }
-
-        // POST: news/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit( news news, HttpPostedFileBase file)
@@ -104,14 +86,10 @@ namespace promoTalk.Controllers
             {
                 ViewBag.result1 = "EXISTS";
                 return View(news);
-            }
-            String fileName = "";
+            }           
             if (file != null)
             {
-                fileName = Guid.NewGuid() + "_" + Path.GetFileName(file.FileName);
-                var path = Path.Combine(Server.MapPath("~/Content/marketing"), fileName);
-                file.SaveAs(path);
-                news.seo_OGImage = "/Content/marketing/" + fileName;
+                news.seo_OGImage = UploadFile(file, "/Content/marketing");
             }
            
             news.createdDate = BaseUtil.GetCurrentDateTime();

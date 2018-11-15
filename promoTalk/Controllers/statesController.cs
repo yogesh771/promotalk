@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using promoTalk.Models;
 
@@ -29,10 +26,6 @@ namespace promoTalk.Controllers
             ViewBag.countryID = db.countries;
             return View();
         }
-
-        // POST: states/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "StateID,StateName,countryID")] state state)
@@ -64,9 +57,6 @@ namespace promoTalk.Controllers
             return View(state);
         }
 
-        // POST: states/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "StateID,StateName,countryID")] state state)

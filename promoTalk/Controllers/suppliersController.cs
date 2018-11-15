@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using promoTalk.Models;
 using System.Web.Script.Serialization;
@@ -16,7 +14,6 @@ namespace promoTalk.Controllers
     {
         private promotalkEntities db = new promotalkEntities();
 
-        // GET: suppliers
         public  ActionResult Index(int id)
         {
             ViewBag.supplierFor = id;
@@ -24,7 +21,6 @@ namespace promoTalk.Controllers
             return View(suppliers);
         }
 
-        // GET: suppliers/Create
         public ActionResult Create(int id)
         {
             ViewBag.StateID = db.states.Select(e => new { e.StateID, e.StateName });
@@ -46,8 +42,7 @@ namespace promoTalk.Controllers
                 ViewBag.result = "s";
                 ViewBag.StateID = db.states.Select(e => new { e.StateID, e.StateName });
                 ViewBag.countryID = db.countries.Select(e => new { e.countryID, e.countryName });
-                return View(supplier);
-               // return RedirectToAction("Index", new { id = supplier.SupplierFor });
+                return View(supplier);              
             }
             ViewBag.StateID = db.states.Select(e => new { e.StateID, e.StateName });
             ViewBag.countryID = db.countries.Select(e => new { e.countryID, e.countryName });
@@ -78,8 +73,7 @@ namespace promoTalk.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index", new{ id = supplier.SupplierFor });
            
-            }
-           // ViewBag.StateID = new SelectList(db.states, "StateID", "StateName", supplier.StateID);
+            }          
             return View(supplier);
         }
         public ActionResult fillState(Int32 countryID)

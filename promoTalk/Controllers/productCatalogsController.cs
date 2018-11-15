@@ -15,12 +15,16 @@ namespace promoTalk.Controllers
     {
         private promotalkEntities db = new promotalkEntities();
 
-        // GET: productCatalogs
+        private void fillDropDown(int id)
+        {
+            ViewBag.productCategoryID = new SelectList(db.productCategories.Where(e => e.SupplierFor == id && e.isActive == true).Select(e => new { e.productCategoryID, e.productCategory1 }).OrderBy(e => e.productCategory1), "productCategoryID", "productCategory1");
+            ViewBag.supplierID = new SelectList(db.suppliers.Where(e => e.SupplierFor == id && e.isActive == true).Select(e => new { e.supplierID, e.supplierName }), "supplierID", "supplierName");
+
+        }
         public ActionResult Index(int id)
         {
-            ViewBag.productCategoryID =new SelectList( db.productCategories.Where(e=>e.SupplierFor== id && e.isActive == true).Select(e => new { e.productCategoryID, e.productCategory1 }), "productCategoryID", "productCategory1");
-            ViewBag.supplierID = new SelectList(db.suppliers.Where(e => e.SupplierFor == id && e.isActive==true).Select(e => new { e.supplierID, e.supplierName }), "supplierID", "supplierName");
-            ViewBag.isoffers = id;
+            fillDropDown(id);
+              ViewBag.isoffers = id;
             return View();
         }
         [HttpPost]
@@ -35,26 +39,21 @@ namespace promoTalk.Controllers
             ViewBag.isOffer = isOffer;
             return PartialView("_partialProductCatalogs", productCatalogs.ToList());
         }
-        // GET: productCatalogs/Create
+    
         public ActionResult Create(int id )
         {
-            ViewBag.productCategoryID = new SelectList(db.productCategories.Where(e => e.SupplierFor == id && e.isActive == true).Select(e => new { e.productCategoryID, e.productCategory1 }).OrderBy(e => e.productCategory1), "productCategoryID", "productCategory1");
-            ViewBag.supplierID = db.suppliers.Where(e => e.SupplierFor == id && e.isActive == true).Select(e => new { e.supplierID, e.supplierName });
+            fillDropDown(id);           
             productCatalog productCatalog = new productCatalog();
             productCatalog.isOffer = id==2? true:false;
             return View(productCatalog);
         }
-
-        // POST: productCatalogs/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(productCatalog productCatalog, IEnumerable< HttpPostedFileBase> files , FormCollection frm)
         {
             var id1_ = productCatalog.isOffer == true ? 1 : 0;
-            ViewBag.productCategoryID = new SelectList(db.productCategories.Where(e => e.SupplierFor == id1_ && e.isActive == true).Select(e => new { e.productCategoryID, e.productCategory1 }).OrderBy(e => e.productCategory1), "productCategoryID", "productCategory1");
-            ViewBag.supplierID = db.suppliers.Where(e => e.SupplierFor == id1_ && e.isActive == true).Select(e => new { e.supplierID, e.supplierName });
+            fillDropDown(id1_);           
 
             AccountController oAccountController = new AccountController();
             if (!oAccountController.isSlugExist(productCatalog.slugURL, "productCatalogs", 0, id1_))
@@ -76,11 +75,8 @@ namespace promoTalk.Controllers
                         if (i == 1)
                         {
                             if (file != null && (file.ContentType == "image/png" || file.ContentType == "image/jpeg"))
-                                {
-                                fileName = Guid.NewGuid() + "_" + Path.GetFileName(file.FileName);
-                                var path = Path.Combine(Server.MapPath("~/Content/img"), fileName);
-                                file.SaveAs(path);
-                                productCatalog.thumbImageURL =  "/Content/img/" + fileName;
+                                {                                
+                                productCatalog.thumbImageURL = UploadFile(file, "/Content/img");
                             }
                             else
                             {
@@ -91,10 +87,8 @@ namespace promoTalk.Controllers
                         {
                             if (file != null && file.ContentType == "application/pdf")
                             {
-                                fileName = Guid.NewGuid() + "_" + Path.GetFileName(file.FileName);
-                                var path = Path.Combine(Server.MapPath("~/Content/PDF"), fileName);
-                                file.SaveAs(path);
-                                productCatalog.pdfURL =  "/Content/PDF/" + fileName;
+                                fileName = Guid.NewGuid() + "_" + Path.GetFileName(file.FileName);                                
+                                productCatalog.pdfURL = UploadFile(file, "/Content/PDF");  
                                 productCatalog.pdfName = fileName;
                             }
                         }
@@ -148,7 +142,7 @@ namespace promoTalk.Controllers
             var serviceList = db.catalogCatagories.Include(e => e.productCategory).Where(e => e.catalogID == id).OrderBy(e => e.productCategory.productCategory1).ToList();
             return PartialView("catalogcategory", serviceList);
         }
-        // GET: productCatalogs/Edit/5
+       
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -178,20 +172,17 @@ namespace promoTalk.Controllers
             }
             ViewBag.selectedCategoriesID = String.Join(",", selectedCategoriesID);
             ViewBag.supplierID = new SelectList(db.suppliers.Where(e => e.SupplierFor == id1 && e.isActive == true).Select(e => new { e.supplierID, e.supplierName }), "supplierID", "supplierName", productCatalog.supplierID);
-            //ViewBag.supplierID = db.suppliers.Where(e => e.SupplierFor == id1 && e.isActive == true).Select(e => new { e.supplierID, e.supplierName });
+       
             return View(productCatalog);
         }
 
-        // POST: productCatalogs/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit( productCatalog productCatalog, IEnumerable<HttpPostedFileBase> files, FormCollection frm)
         {
             var id1 = productCatalog.isOffer == true ? 1 : 0;
-            ViewBag.productCategoryID = new SelectList(db.productCategories.Where(e => e.SupplierFor == id1 && e.isActive == true).Select(e => new { e.productCategoryID, e.productCategory1 }).OrderBy(e => e.productCategory1), "productCategoryID", "productCategory1");
-            ViewBag.supplierID = db.suppliers.Where(e => e.SupplierFor == id1 && e.isActive == true).Select(e => new { e.supplierID, e.supplierName });
+            fillDropDown(id1);
 
             AccountController oAccountController = new AccountController();
             if (!oAccountController.isSlugExist(productCatalog.slugURL, "productCatalogs", productCatalog.catalogID, id1))
@@ -213,10 +204,7 @@ namespace promoTalk.Controllers
                     {
                         if (file.ContentType == "image/png" || file.ContentType == "image/jpeg")
                         {
-                            fileName = Guid.NewGuid() + "_" + Path.GetFileName(file.FileName);
-                            var path = Path.Combine(Server.MapPath("~/Content/img"), fileName);
-                            file.SaveAs(path);
-                            productCatalog.thumbImageURL = "/Content/img/" + fileName;
+                            productCatalog.thumbImageURL = UploadFile(file, "/Content/img");
                         }
                         
                     }
@@ -224,10 +212,9 @@ namespace promoTalk.Controllers
                     {
                         if(file !=null && file.ContentType == "application/pdf")
                         {
-                            fileName = Guid.NewGuid() + "_" + Path.GetFileName(file.FileName);
-                            var path = Path.Combine(Server.MapPath("~/Content/PDF"), fileName);
-                            file.SaveAs(path);
-                            productCatalog.pdfURL =  "/Content/PDF/" + fileName;
+                            fileName = Guid.NewGuid() + "_" + Path.GetFileName(file.FileName);                          
+                            productCatalog.pdfName = fileName;
+                            productCatalog.pdfURL = UploadFile(file, "/Content/PDF"); 
                         }
                     }
                     i = i + 1;

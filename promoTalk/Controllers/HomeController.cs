@@ -2,16 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Data;
 using System.Data.Entity;
-using System.Data.SqlTypes;
-using System.Data.SqlClient;
 using System.IO;
 using System.Net;
 using HtmlAgilityPack;
-using IronPdf;
 
 namespace promoTalk.Controllers
 {
@@ -50,24 +46,14 @@ namespace promoTalk.Controllers
         }
         [HttpPost]
         public ActionResult _partialProductCatalogs(int productCategoryID, int supplierID, int isOffer, int isPrenium)
-        {
-            var productCatalogs = (dynamic)null;
-            if (isPrenium == 0)
-            {
-                productCatalogs = db.getProductCatalog_sp(productCategoryID, supplierID, 0, 1).ToList();
-            }
-            else
-            {
-                productCatalogs = db.getProductCatalog_sp(productCategoryID, supplierID, 1, 0).ToList();
-            }
-            return PartialView("_partialProductCatalogsExternal", productCatalogs);
+        {          
+            return PartialView("_partialProductCatalogsExternal", isPrenium == 0? db.getProductCatalog_sp(productCategoryID, supplierID, 0, 1).ToList() : db.getProductCatalog_sp(productCategoryID, supplierID, 1, 0).ToList());
         }
 
         [HttpPost]
         public ActionResult _partialProductOffers(int productCategoryID, int supplierID, int isOffer, int isPrenium)
         {           
-             var   productCatalogs = db.getProductCatalog_sp(productCategoryID, supplierID, 1, 0).ToList();
-           
+             var   productCatalogs = db.getProductCatalog_sp(productCategoryID, supplierID, 1, 0).ToList();           
             return PartialView("_partialProductOffers", productCatalogs);
         }
 
@@ -80,8 +66,7 @@ namespace promoTalk.Controllers
             var productCategories = db.catalogCatagories.Where(e=> catalogIDs.Contains(e.catalogID)).Select(e => e.productCategoryID).Distinct();
             ViewBag.productCategoryID = new SelectList(db.productCategories.Where(e => productCategories.Contains(e.productCategoryID) && e.SupplierFor == 2 && e.isActive == true).Select(e => new { e.productCategoryID, e.productCategory1 }), "productCategoryID", "productCategory1");
 
-            //ViewBag.productCategoryID = new SelectList(db.productCategories.Where(e => e.SupplierFor == 2 && e.isActive==true).Select(e => new { e.productCategoryID, e.productCategory1 }), "productCategoryID", "productCategory1");
-            var listsup = productCatalogs.Select(e => e.supplierID).Distinct();
+           var listsup = productCatalogs.Select(e => e.supplierID).Distinct();
             ViewBag.supplierID = new SelectList(db.suppliers.Where(e => listsup.Contains(e.supplierID) && e.SupplierFor == 2 && e.isActive==true).Select(e => new { e.supplierID, e.supplierName }), "supplierID", "supplierName");
 
 
@@ -182,17 +167,9 @@ namespace promoTalk.Controllers
         {
             var dt = BaseUtil.GetCurrentDateTime();
             if (dtmonth == "All Months" && eventType == "All Events")
-            {
-                if (isFetureEvent)
-                {
-                    return PartialView("_partialevents", db.tbl_events.Where(e => e.dateTime >= dt).OrderBy(e => e.dateTime).ToList());
-                }
-                else
-                {
-                    return PartialView("_partialevents", db.tbl_events.Where(e => e.dateTime < dt).OrderBy(e => e.dateTime).ToList());
-                }
+            {               
+                return PartialView("_partialevents", isFetureEvent==true?  db.tbl_events.Where(e => e.dateTime >= dt).OrderBy(e => e.dateTime).ToList(): db.tbl_events.Where(e => e.dateTime < dt).OrderBy(e => e.dateTime).ToList());
             }
-
             else {
                 IQueryable<tbl_events> query = db.Set<tbl_events>();
                 var tblevents = db.tbl_events.Where(e => e.dateTime >= dt);
@@ -226,45 +203,7 @@ namespace promoTalk.Controllers
                 {
                     var monthint =0 ;
                     var k = dtmonth.Substring(0, dtmonth.IndexOf('-')-1);
-                    switch (k)
-                    {
-                        case "January":
-                            monthint = 1;
-                            break;
-                        case "February":
-                            monthint = 2;
-                            break;
-                        case "March":
-                            monthint = 3;
-                            break;
-                        case "April":
-                            monthint = 4;
-                            break;
-                        case "May":
-                            monthint = 5;
-                            break;
-                        case "June":
-                            monthint = 6;
-                            break;
-                        case "July":
-                            monthint = 7;
-                            break;
-                        case "August":
-                            monthint = 8;
-                            break;
-                        case "September":
-                            monthint = 9;
-                            break;
-                        case "October":
-                            monthint = 10;
-                            break;
-                        case "November":
-                            monthint = 11;
-                            break;
-                        case "December":
-                            monthint = 12;
-                            break;
-                    }
+                    monthint= BaseUtil.GetIntOfMonthName(k);                   
 
                     var year =Convert.ToInt16( dtmonth.Substring(dtmonth.IndexOf('-')+2,4));
                     query = query.Where(e => e.dateTime.Month == monthint && e.dateTime.Year == year);

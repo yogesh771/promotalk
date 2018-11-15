@@ -269,7 +269,6 @@
     </Compile>
     <Compile Include="Models\BaseClass\BaseClass.cs" />
     <Compile Include="Models\BaseClass\baseModel.cs" />
-    <Compile Include="Models\BaseClass\StringHtmlExtensions.cs" />
     <Compile Include="Models\buisinessInformation.cs">
       <DependentUpon>promotalk.tt</DependentUpon>
     </Compile>

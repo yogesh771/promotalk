@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using promoTalk.Models;
 
@@ -14,8 +11,7 @@ namespace promoTalk.Controllers
     public class productCategoriesController : BaseClass
     {
         private promotalkEntities db = new promotalkEntities();
-
-        // GET: productCategories
+      
         public async Task<ActionResult> Index(int id)
         {
             ViewBag.supplierFor = id;
@@ -39,8 +35,7 @@ namespace promoTalk.Controllers
                 db.productCategories.Add(productCategory);
                 await db.SaveChangesAsync();
                 ViewBag.result = "s";
-                return View(productCategory);
-                //return RedirectToAction("Index", new { id = productCategory.SupplierFor });
+                return View(productCategory);              
             }
 
             return View(productCategory);
@@ -59,10 +54,7 @@ namespace promoTalk.Controllers
         
             return View(productCategories);
         }
-
-        // POST: states/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(productCategory productCategories)
